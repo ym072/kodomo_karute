@@ -80,8 +80,4 @@ test:
 #
 production:
   <<: *default
-  database: <%= ENV["kodomo_karute_db] %>
-  username: <%= ENV["kodomo_karute_db_user] %>
-  password: <%= ENV["2Mn3vWTv0RsLawprE4udvKcpC4cpTxtf"] %>
-  host: <%= ENV["dpg-d4tqjpidbo4c73agmhm0-a"] %>
-  port: <%= ENV["5432"] %>
+  url: <%= ENV["postgresql://kodomo_karute_db_user:2Mn3vWTv0RsLawprE4udvKcpC4cpTxtf@dpg-d4tqjpidbo4c73agmhm0-a.singapore-postgres.render.com/kodomo_karute_db"] %>
