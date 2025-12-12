@@ -80,6 +80,8 @@ test:
 #
 production:
   <<: *default
-  database: medical_record_app_production
-  username: medical_record_app
-  password: <%= ENV["MEDICAL_RECORD_APP_DATABASE_PASSWORD"] %>
+  database: <%= ENV["kodomo_karute_db] %>
+  username: <%= ENV["kodomo_karute_db_user] %>
+  password: <%= ENV["2Mn3vWTv0RsLawprE4udvKcpC4cpTxtf"] %>
+  host: <%= ENV["dpg-d4tqjpidbo4c73agmhm0-a"] %>
+  port: <%= ENV["5432"] %>
