@@ -33,25 +33,21 @@
           <% end %>
         </div>
 
-        <div class="form-row">
-          <label for="temp">熱</label>
-          <%= f.number_field :body_temperature, step: 0.1, placeholder: "℃", class: "form-control", style: "width: 100px;" %>
+        <div class="form-row"> 
+          <%= f.number_field :body_temperature, placeholder: "体温", step: 0.1, class: "form-control", style: "width: 100px;" %>
           <%= button_tag "記録", type: "submit", name: "commit_type", value: "temperature", class: "record-button" %>
         </div>
 
-        <!-- 
-        メモ 一時非表示
         <div class="form-row">
           <%= f.text_area :memo, placeholder: "メモ", rows: 2, class: "form-control" %>
           <%= button_tag "記録", type: "submit", name: "commit_type", value: "memo", class: "record-button" %>
         </div>
 
-        病名 一時非表示
         <div class="form-row">
           <%= f.text_field :disease_name, placeholder: "病名（例: 風邪、インフルエンザなど）", class: "form-control" %>
           <%= button_tag "記録", type: "submit", name: "commit_type", value: "disease_name", class: "record-button" %>
         </div>
-        -->
+
       <% end %>
 
       <div class="actions">
