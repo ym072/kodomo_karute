@@ -10,12 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_12_13_122219) do
+ActiveRecord::Schema[7.2].define(version: 2025_12_15_053231) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
-  create_table "disease_records", force: :cascade do |t|
-    t.bigint "kid_id", null: false
+  create_table "disease_records", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "kid_id", null: false
     t.datetime "start_at"
     t.datetime "end_at"
     t.string "name"
@@ -24,7 +25,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_13_122219) do
     t.index ["kid_id"], name: "index_disease_records_on_kid_id"
   end
 
-  create_table "kids", force: :cascade do |t|
+  create_table "kids", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "name"
     t.date "birthday"
@@ -33,8 +34,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_13_122219) do
     t.index ["user_id"], name: "index_kids_on_user_id"
   end
 
-  create_table "reported_symptoms", force: :cascade do |t|
-    t.bigint "disease_record_id", null: false
+  create_table "reported_symptoms", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "disease_record_id", null: false
     t.bigint "symptom_name_id"
     t.datetime "recorded_at"
     t.text "memo"
