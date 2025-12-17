@@ -7,6 +7,14 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <meta property="og:title" content="こどもカルテ" />
+    <meta property="og:description" content="うんちや嘔吐、体温の変化。看病中に把握するのは大変ですよね。お子さんの症状、私がまとめておきます。" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://medical-record-xqit.onrender.com/pages/home" />
+    <meta property="og:image" content="<%= image_url('ogp.png') %>" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+
     <%= stylesheet_link_tag "application", media: "all", "data-turbo-track": "reload", media: "all" %>
 
     <link rel="manifest" href="/manifest.json">
