@@ -1,0 +1,11 @@
+<h1>過去の体調不良</h1>
+
+<ul>
+  <% @disease_records.each do |record| %>
+    <li>
+      <%= record.start_at.to_date %> 〜
+      <%= record.end_at.to_date %><br>
+      <%= record.name %>
+    </li>
+  <% end %>
+</ul>
