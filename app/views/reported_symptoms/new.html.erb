@@ -25,7 +25,7 @@
         </div>
       </div>
     <% elsif @reported_symptom %>
-      <%= form_with model: [@kid, @reported_symptom], local: true, data: { turbo: false } do |f| %>
+      <%= form_with url: kid_reported_symptoms_path(@kid), local: true, data: { turbo: false } do |f| %>
         <div class="symptom-buttons">
           <% ["頭痛","咳","鼻水","発疹","嘔吐","便"].each do |name| %>
             <% symptom = SymptomName.find_by(name: name) %>
@@ -44,7 +44,7 @@
         </div>
 
         <div class="form-row">
-          <%= f.text_field :disease_name, placeholder: "病名（例: 風邪、インフルエンザなど）", class: "form-control" %>
+          <%= f.text_field :disease_name, name: "reported_symptom[disease_name]", placeholder: "病名（例: 風邪、インフルエンザなど）", class: "form-control" %>
           <%= button_tag "記録", type: "submit", name: "commit_type", value: "disease_name", class: "record-button" %>
         </div>
 

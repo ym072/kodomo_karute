@@ -32,6 +32,9 @@ class DiseaseRecordsController < ApplicationController
     end
   end
 
+  def index
+    @disease_records = @kid.disease_records.where.not(end_at: nil).order(end_at: :desc)
+  end
 
   private
 
@@ -44,6 +47,6 @@ class DiseaseRecordsController < ApplicationController
   end
 
   def disease_record_params
-    params.require(:disease_record).permit(:start_at, :end_at, :notes)
+    params.require(:disease_record).permit(:name, :start_at, :end_at)
   end
 end

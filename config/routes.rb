@@ -13,6 +13,8 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :disease_records, only: [:index]
+
     resources :reported_symptoms, only: [:new, :create] do
       collection do
         post :start_record

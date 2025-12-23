@@ -30,36 +30,21 @@ class ReportedSymptomsController < ApplicationController
     end
   
     commit_type = params[:commit_type]
+  
+    case commit_type
+    when "disease_name"
+      @disease_record.update!(
+        name: params[:reported_symptom][:disease_name]
+      )
+      redirect_to new_kid_reported_symptom_path(@kid), notice: "病名を記録しました"
+      return
+    end
+  
     @reported_symptom = @disease_record.reported_symptoms.new(reported_symptom_params)
     @reported_symptom.recorded_at = Time.current
   
-    case commit_type
-    when "temperature"
-      @reported_symptom.body_temperature = params[:reported_symptom][:body_temperature]
-      @reported_symptom.symptom_name_id ||= SymptomName.find_by(name: "その他")&.id
-      message = "体温を記録しました"
-  
-    when "memo"
-      @reported_symptom.memo = params[:reported_symptom][:memo]
-      @reported_symptom.symptom_name_id ||= SymptomName.find_by(name: "その他")&.id
-      message = "メモを記録しました"
-  
-    when "disease_name"
-      @disease_record.update(name: params[:reported_symptom][:disease_name])
-      redirect_to new_kid_reported_symptom_path(@kid), notice: "病名を記録しました"
-      return
-  
-    else
-      if @reported_symptom.symptom_name_id.present?
-        symptom_name = @reported_symptom.symptom_name.name
-        message = "#{symptom_name}を記録しました"
-      else
-        message = "症状を記録しました"
-      end
-    end
-  
     if @reported_symptom.save
-      redirect_to new_kid_reported_symptom_path(@kid), notice: message
+      redirect_to new_kid_reported_symptom_path(@kid), notice: "症状を記録しました"
     else
       render :new, status: :unprocessable_entity
     end
@@ -91,5 +76,9 @@ class ReportedSymptomsController < ApplicationController
 
   def reported_symptom_params
     params.require(:reported_symptom).permit(:symptom_name_id, :recorded_at, :memo, :body_temperature)
+  end
+
+  def disease_name_param
+    params.dig(:reported_symptom, :disease_name)
   end
 end
