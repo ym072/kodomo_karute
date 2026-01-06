@@ -9,3 +9,22 @@
     </li>
   <% end %>
 </ul>
+
+<%= form_with url: kid_disease_records_path(@kid), method: :get, local: true do |f| %>
+  <div>
+    病名
+    <%= f.text_field :disease_name %>
+  </div>
+
+  <div>
+    症状
+    <%= f.select :symptom_name_id,options_from_collection_for_select(SymptomName.all, :id, :name),include_blank: "選択してください" %>
+  </div>
+
+  <div>
+    期間
+    <%= f.date_field :from %> 〜 <%= f.date_field :to %>
+  </div>
+
+  <%= f.submit "検索" %>
+<% end %>
