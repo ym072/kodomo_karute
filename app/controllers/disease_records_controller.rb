@@ -33,7 +33,30 @@ class DiseaseRecordsController < ApplicationController
   end
 
   def index
-    @disease_records = @kid.disease_records.where.not(end_at: nil).order(end_at: :desc)
+    records = @kid.disease_records.where.not(end_at: nil)
+
+    # 病名検索
+    if params[:disease_name].present?
+      records = records.where("name LIKE ?", "%#{params[:disease_name]}%")
+    end
+
+    # 期間検索
+    if params[:from].present?
+      records = records.where("start_at >= ?", params[:from])
+    end
+
+    if params[:to].present?
+      records = records.where("end_at <= ?", params[:to])
+    end
+
+    # 症状検索
+    if params[:symptom_name_id].present?
+      records = records.joins(:reported_symptoms)
+                       .where(reported_symptoms: { symptom_name_id: params[:symptom_name_id] })
+                       .distinct
+    end
+
+    @disease_records = records.order(end_at: :desc)
   end
 
   private
