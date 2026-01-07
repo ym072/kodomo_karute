@@ -52,16 +52,66 @@ class ReportedSymptomsController < ApplicationController
   
   def summary
     @kid = Kid.find(params[:kid_id])
-    @disease_record = @kid.disease_records.order(start_at: :desc, created_at: :desc).first
+    @disease_record = @kid.disease_records.where(end_at: nil)
+                                          .order(start_at: :desc)
+                                          .first
   
     if @disease_record.nil?
       redirect_to kid_path(@kid), alert: "記録中の病気がありません。"
       return
     end
-  
-    @reported_symptoms = @disease_record.reported_symptoms.includes(:symptom_name)
-    @symptoms_by_date = @reported_symptoms.group_by { |rs| rs.created_at.to_date }
-    @symptoms_by_date = @symptoms_by_date.sort.to_h
+
+    @tab = params[:tab] || "today"
+
+    @reported_symptoms = @disease_record.reported_symptoms
+                                        .includes(:symptom_name)
+
+    @first_symptom_dates =
+      @reported_symptoms
+        .where.not(symptom_name_id: nil)
+        .group(:symptom_name_id)
+        .minimum(:recorded_at)
+                                      
+
+    if @tab == "today"
+      today = Time.zone.today
+
+      @day_count =
+        (today - @disease_record.start_at.to_date).to_i + 1
+
+      @today_symptoms =
+        @reported_symptoms.where(recorded_at: today.all_day)
+
+      @latest_temperature =
+        @today_symptoms
+          .where.not(body_temperature: nil)
+          .order(recorded_at: :desc)
+          .first
+
+      vomit_id   = SymptomName.find_by(name: "嘔吐")&.id
+      diarrhea_id = SymptomName.find_by(name: "便")&.id
+
+      @vomit_count =
+        vomit_id ? @today_symptoms.where(symptom_name_id: vomit_id).count : 0
+
+      @diarrhea_count =
+        diarrhea_id ? @today_symptoms.where(symptom_name_id: diarrhea_id).count : 0
+
+      @symptom_day_counts = {}
+
+      @first_symptom_dates.each do |symptom_id, first_time|
+        @symptom_day_counts[symptom_id] =
+          (today - first_time.to_date).to_i + 1
+      end
+
+      @today_symptom_names =
+        @today_symptoms
+          .where.not(symptom_name_id: nil)
+          .select(:symptom_name_id)
+          .distinct
+          .includes(:symptom_name)
+
+    end
   end
 
   private
