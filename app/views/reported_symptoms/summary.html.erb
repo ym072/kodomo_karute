@@ -9,25 +9,79 @@
   <main class="login-main">
   <h2>症状サマリー</h2>
 
-  <% if @symptoms_by_date.present? %>
-    <% @symptoms_by_date.each do |date, symptoms| %>
-      <div class="summary-day">
-        <h3><%= date.strftime("%-m月%-d日") %></h3>
-        <% symptom_names = symptoms.select { |s| s.symptom_name.present? }.sort_by { |s| s.symptom_name.id } %>
-        <% temperatures = symptoms.select { |s| s.body_temperature.present? } %>
+  <div class="tabs">
+  <%= link_to "今日",
+    summary_kid_reported_symptoms_path(@kid, tab: "today"),
+    class: (@tab == "today" ? "active" : "") %>
 
-        <p>
-          <% symptom_names.each do |s| %>
-            <%= s.symptom_name.name %>、
-          <% end %>
-          <% temperatures.each do |t| %>
-            熱（<%= t.body_temperature %>℃）、
-          <% end %>
-        </p>
-      </div>
+  <%= link_to "全期間",
+    summary_kid_reported_symptoms_path(@kid, tab: "all"),
+    class: (@tab == "all" ? "active" : "") %>
+  </div>
+
+  <% if @tab == "today" %>
+    <h2><%= Date.today %>（発症 <%= @day_count %> 日目）</h2>
+
+    <% if @latest_temperature %>
+      <p>
+        最新体温：
+        <%= @latest_temperature.body_temperature %>℃
+        （<%= l @latest_temperature.recorded_at, format: :short %>）
+      </p>
+      <% else %>
+        <p>本日の体温記録はありません</p>
     <% end %>
-  <% else %>
-  <p>症状の記録がありません。</p>
+
+    <h3>今日の症状</h3>
+
+    <% if @vomit_count > 0 %>
+      <p>
+        嘔吐：<%= @vomit_count %>回
+         （<%= @symptom_day_counts[SymptomName.find_by(name: "嘔吐").id] %>日目）
+      </p>
+    <% end %>
+
+    <% if @diarrhea_count > 0 %>
+      <p>
+        便：<%= @diarrhea_count %>回
+         （<%= @symptom_day_counts[SymptomName.find_by(name: "便").id] %>日目）
+      </p>
+    <% end %>
+
+    <ul>
+      <% @today_symptom_names.each do |s| %>
+        <% next if ["嘔吐", "便"].include?(s.symptom_name.name) %>
+
+        <li>
+          <%= s.symptom_name.name %>:
+          <%= @symptom_day_counts[s.symptom_name_id] %>日目
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+
+
+  <% if @tab == "all" %>
+    <% if @symptoms_by_date.present? %>
+      <% @symptoms_by_date.each do |date, symptoms| %>
+        <div class="summary-day">
+          <h3><%= date.strftime("%-m月%-d日") %></h3>
+          <% symptom_names = symptoms.select { |s| s.symptom_name.present? }.sort_by { |s| s.symptom_name.id } %>
+          <% temperatures = symptoms.select { |s| s.body_temperature.present? } %>
+
+          <p>
+            <% symptom_names.each do |s| %>
+              <%= s.symptom_name.name %>、
+            <% end %>
+            <% temperatures.each do |t| %>
+              熱（<%= t.body_temperature %>℃）、
+            <% end %>
+          </p>
+        </div>
+      <% end %>
+    <% else %>
+      <p>症状の記録がありません。</p>
+    <% end %>
   <% end %>
 
   <div class="footer">
