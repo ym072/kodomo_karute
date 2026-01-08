@@ -159,6 +159,43 @@ class ReportedSymptomsController < ApplicationController
           @matrix[date][:temperature] = true
         end
       end
+
+      @end_date = Time.zone.today
+      @start_date = @disease_record.start_at.to_date
+
+      @dates = (@start_date..@end_date).to_a
+
+      @records_by_date =
+        @reported_symptoms
+          .where(recorded_at: @start_date.beginning_of_day..@end_date.end_of_day)
+          .group_by { |r| r.recorded_at.to_date }
+
+      @chart_data = {
+        labels: @dates.map { |d| d.strftime("%m/%d") },
+        temperature: [],
+        vomit: [],
+        stool: []
+      }
+
+      @dates.each do |date|
+        daily_records = @records_by_date.fetch(date, [])
+
+        temp =
+          daily_records
+            .select { |r| r.body_temperature.present? }
+            .max_by(&:recorded_at)
+            &.body_temperature
+
+        vomit_count =
+          daily_records.count { |r| r.symptom_name&.name == "嘔吐" }
+
+        stool_count =
+          daily_records.count { |r| r.symptom_name&.name == "便" }
+
+        @chart_data[:temperature] << temp
+        @chart_data[:vomit] << vomit_count
+        @chart_data[:stool] << stool_count
+      end
     end
   end
 
