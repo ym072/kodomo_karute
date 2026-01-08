@@ -66,13 +66,10 @@ class ReportedSymptomsController < ApplicationController
     @reported_symptoms = @disease_record.reported_symptoms
                                         .includes(:symptom_name)
 
-    @first_symptom_dates =
-      @reported_symptoms
-        .where.not(symptom_name_id: nil)
-        .group(:symptom_name_id)
-        .minimum(:recorded_at)
+    @first_symptom_dates =@reported_symptoms.where.not(symptom_name_id: nil)
+                                            .group(:symptom_name_id)
+                                            .minimum(:recorded_at)
                                       
-
     if @tab == "today"
       today = Time.zone.today
 
@@ -110,7 +107,58 @@ class ReportedSymptomsController < ApplicationController
           .select(:symptom_name_id)
           .distinct
           .includes(:symptom_name)
+    end
 
+    if @tab == "all"
+      @symptom_slots = {
+        headache: "頭痛",
+        cough: "咳",
+        runny_nose: "鼻水",
+        rash: "発疹",
+        vomit: "嘔吐",
+        stool: "便",
+        temperature: "体温"
+      }
+
+      this_week_start = Time.zone.today.beginning_of_week(:monday)
+      this_week_end   = this_week_start + 6.days
+
+      last_week_start = this_week_start - 7.days
+      last_week_end   = last_week_start + 6.days
+
+      @weeks = {
+        last: (last_week_start..last_week_end).to_a,
+        this: (this_week_start..this_week_end).to_a
+      }
+
+      range_start = last_week_start.beginning_of_day
+      range_end   = this_week_end.end_of_day
+
+      records =
+        @reported_symptoms.where(recorded_at: range_start..range_end)
+
+      @matrix = {}
+
+      @weeks.values.flatten.each do |date|
+        @matrix[date] = {}
+        @symptom_slots.keys.each do |key|
+          @matrix[date][key] = false
+        end
+      end
+
+      records.each do |rs|
+        date = rs.recorded_at.to_date
+  
+        if rs.symptom_name
+          slot_key =
+            @symptom_slots.find { |_, name| name == rs.symptom_name.name }&.first
+          @matrix[date][slot_key] = true if slot_key
+        end
+  
+        if rs.body_temperature.present?
+          @matrix[date][:temperature] = true
+        end
+      end
     end
   end
 

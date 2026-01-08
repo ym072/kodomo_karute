@@ -60,28 +60,42 @@
     </ul>
   <% end %>
 
-
   <% if @tab == "all" %>
-    <% if @symptoms_by_date.present? %>
-      <% @symptoms_by_date.each do |date, symptoms| %>
-        <div class="summary-day">
-          <h3><%= date.strftime("%-m月%-d日") %></h3>
-          <% symptom_names = symptoms.select { |s| s.symptom_name.present? }.sort_by { |s| s.symptom_name.id } %>
-          <% temperatures = symptoms.select { |s| s.body_temperature.present? } %>
-
-          <p>
-            <% symptom_names.each do |s| %>
-              <%= s.symptom_name.name %>、
-            <% end %>
-            <% temperatures.each do |t| %>
-              熱（<%= t.body_temperature %>℃）、
-            <% end %>
-          </p>
+    <div class="symptom-legend">
+      <% @symptom_slots.each do |key, label| %>
+        <div class="legend-item">
+          <span class="legend-color <%= key %>"></span>
+          <span class="legend-label"><%= label %></span>
         </div>
       <% end %>
-    <% else %>
-      <p>症状の記録がありません。</p>
-    <% end %>
+    </div>
+
+    <div class="weekly-matrix">
+
+      <% [:last, :this].each do |week_key| %>
+        <div class="week-column">
+          <h3><%= week_key == :last ? "先週" : "今週" %></h3>
+
+          <% @weeks[week_key].each do |date| %>
+            <div class="day-row">
+              <div class="weekday">
+                <%= date.strftime("%a") %>
+              </div>
+
+              <div class="symptom-cells">
+                <% @symptom_slots.each do |key, label| %>
+                  <div class="symptom-cell <%= "active #{key}" if @matrix[date][key] %>">
+                  </div>
+                <% end %>
+              </div>
+            </div>
+
+          <% end %>
+
+        </div>
+      <% end %>
+
+    </div>
   <% end %>
 
   <div class="footer">
