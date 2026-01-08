@@ -94,8 +94,26 @@
 
         </div>
       <% end %>
-
     </div>
+
+    <div class="symptom-trend">
+      <h3>症状の推移</h3>
+
+      <canvas id="symptomTrendChart"
+        data-chart="<%= j @chart_data.to_json %>">
+      </canvas>
+
+      <script type="module">
+        import { renderSymptomTrendChart } from "charts/symptom_trend_chart";
+
+        document.addEventListener("DOMContentLoaded", () => {
+          const canvas = document.getElementById("symptomTrendChart");
+          const data = <%= raw @chart_data.to_json %>;
+          renderSymptomTrendChart(canvas, data);
+        });
+      </script>
+    </div>
+
   <% end %>
 
   <div class="footer">

@@ -280,4 +280,13 @@ body {
 .symptom-cell.vomit { background: #ff9800; }
 .symptom-cell.stool { background: #8bc34a; }
 .symptom-cell.temperature { background: #9c27b0; }
+
+.symptom-trend {
+    margin-top: 32px;
+    padding: 16px;
+}
   
+.symptom-trend h3 {
+    text-align: center;
+    margin-bottom: 12px;
+}
