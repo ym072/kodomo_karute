@@ -204,3 +204,80 @@ body {
     display: flex;
     justify-content: center;
 }
+
+.symptom-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 16px;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+  
+.legend-item {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+}
+  
+.legend-color {
+    width: 12px;
+    height: 12px;
+    margin-right: 6px;
+    border-radius: 2px;
+}
+
+.legend-color.headache { background: #f44336; }
+.legend-color.cough { background: #2196f3; }
+.legend-color.runny_nose { background: #03a9f4; }
+.legend-color.rash { background: #e91e63; }
+.legend-color.vomit { background: #ff9800; }
+.legend-color.stool { background: #8bc34a; }
+.legend-color.temperature { background: #9c27b0; }
+
+.weekly-matrix {
+    display: flex;
+    gap: 48px;
+}
+  
+.week-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+  
+.day-row {
+    display: flex;
+    align-items: center;
+    margin: 0;
+}
+  
+.weekday {
+    width: 32px;
+    text-align: center;
+    font-size: 12px;
+}
+  
+.symptom-cells {
+    display: flex;
+    gap: 0;
+}
+  
+.symptom-cell {
+    width: 12px;
+    height: 24px;
+    background: #eee;
+}
+
+  /* active + 症状色 */
+.symptom-cell.active {
+    background: #4caf50;
+}
+
+.symptom-cell.headache { background: #f44336; }
+.symptom-cell.cough { background: #2196f3; }
+.symptom-cell.runny_nose { background: #03a9f4; }
+.symptom-cell.rash { background: #e91e63; }
+.symptom-cell.vomit { background: #ff9800; }
+.symptom-cell.stool { background: #8bc34a; }
+.symptom-cell.temperature { background: #9c27b0; }
+  
