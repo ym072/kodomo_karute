@@ -1,6 +1,6 @@
 class DiseaseRecordsController < ApplicationController
   before_action :set_kid
-  before_action :set_disease_record, only: [:end_form, :end_update]
+  before_action :set_disease_record, only: [ :end_form, :end_update ]
 
   def new
     @disease_record = @kid.disease_records.new
@@ -21,7 +21,7 @@ class DiseaseRecordsController < ApplicationController
   def end_update
     if @disease_record.update(end_at: Time.current)
       respond_to do |format|
-        format.html { redirect_to kid_path(@kid)}
+        format.html { redirect_to kid_path(@kid) }
         format.js
       end
     else

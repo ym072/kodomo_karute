@@ -3,12 +3,12 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_current_kid, if: :user_signed_in?
-  
+
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
-    devise_parameter_sanitizer.permit(:account_update, keys: [:name])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [ :name ])
+    devise_parameter_sanitizer.permit(:account_update, keys: [ :name ])
   end
 
   def after_sign_in_path_for(resource)
@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
       @current_kid = nil
     end
   end
-  
+
   helper_method :current_kid
   def current_kid
     @current_kid

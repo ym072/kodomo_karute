@@ -8,7 +8,7 @@ class KidsController < ApplicationController
   def create
     @kid = current_user.kids.build(kid_params)
     if @kid.save
-      redirect_to kids_path, notice: '登録しました.'
+      redirect_to kids_path, notice: "登録しました."
     else
       render :new, status: :unprocessable_entity
     end
@@ -22,7 +22,7 @@ class KidsController < ApplicationController
     @kid = current_user.kids.find(params[:id])
     session[:current_kid_id] = @kid.id
     latest_record = @kid.disease_records.order(:start_at).last
-  
+
     if latest_record.nil? || latest_record.end_at.present?
       redirect_to new_kid_reported_symptom_path(@kid, new_record: true)
     else
