@@ -59,7 +59,7 @@ group :development do
 
   gem "image_processing", "~> 1.2"
 
-  gem "aws-sdk-s3", require: false
+  gem "aws-sdk-s3", '~> 1.211.0', require: false
 end
 
 group :test do
