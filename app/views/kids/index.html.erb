@@ -9,10 +9,17 @@
   <main class="login-main">
     <ul>
       <% @kids.each do |kid| %>
-        <li>
-          <%= link_to kid.name, select_kid_path(kid), class: "kid-link" %>
+        <li class="kid-item">
+          <%= link_to select_kid_path(kid), class: "kid-link" do %>
+            <% if kid.icon.attached? %>
+              <%= image_tag kid.icon.variant(resize_to_fill: [72, 72]).processed, class: "kid-icon"  %>
+            <% else %>
+              <span class="kid-icon">👤</span>
+            <% end %>
+            <span class="kid-name"><%= kid.name %></span>
+          <% end %>
         </li>
-       <% end %>
+      <% end %>
     </ul>
 
     <div class="form-actions">

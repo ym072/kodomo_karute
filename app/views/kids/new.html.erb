@@ -9,7 +9,7 @@
   <main class="login-main">
     <%= render "shared/error_messages", object: @kid %>
 
-    <%= form_for(@kid, url: kids_path, html: { class: "login-form" }) do |f| %>
+    <%= form_for(@kid, url: kids_path, html: { class: "login-form", multipart: true }) do |f| %>
       
       <!-- 子どもの名前 -->
       <div class="form-group">
@@ -21,6 +21,12 @@
       <div class="form-group">
         <%= f.label :birthday, "生年月日" %>
         <%= f.date_field :birthday, class: "form-control" %>
+      </div>
+
+      <!-- アイコン -->
+      <div class="form-group">
+        <%= f.label :icon, "お子さまのアイコン" %>
+        <%= f.file_field :icon, accept: "image/*", class: "form-control" %>
       </div>
 
       <div class="form-actions">
