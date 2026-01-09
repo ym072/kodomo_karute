@@ -1,31 +1,31 @@
 Rails.application.routes.draw do
   devise_for :users
 
-  resources :kids, only: [:index, :new, :create, :show] do
+  resources :kids, only: [ :index, :new, :create, :show ] do
     member do
       get :select
     end
 
-    resources :disease_records, only: [:new, :create] do
+    resources :disease_records, only: [ :new, :create ] do
       member do
         get :end_form
         patch :end_update
       end
     end
 
-    resources :disease_records, only: [:index]
+    resources :disease_records, only: [ :index ]
 
-    resources :reported_symptoms, only: [:new, :create] do
+    resources :reported_symptoms, only: [ :new, :create ] do
       collection do
         post :start_record
         get :summary
       end
     end
   end
-  
+
   # get "signup", to: "users#new"
   # ↓今後rootをpages/homeに変更予定
-  root to: redirect('/users/sign_in')
+  root to: redirect("/users/sign_in")
   get "pages/home"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

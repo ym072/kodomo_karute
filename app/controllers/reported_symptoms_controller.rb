@@ -1,6 +1,6 @@
 class ReportedSymptomsController < ApplicationController
   before_action :set_kid
-  before_action :set_disease_record, only: [:new, :create]
+  before_action :set_disease_record, only: [ :new, :create ]
 
   def new
     if @disease_record.present?
@@ -28,9 +28,9 @@ class ReportedSymptomsController < ApplicationController
       redirect_to new_kid_reported_symptom_path(@kid), alert: "記録をスタートしてください。"
       return
     end
-  
+
     commit_type = params[:commit_type]
-  
+
     case commit_type
     when "disease_name"
       @disease_record.update!(
@@ -39,23 +39,23 @@ class ReportedSymptomsController < ApplicationController
       redirect_to new_kid_reported_symptom_path(@kid), notice: "病名を記録しました"
       return
     end
-  
+
     @reported_symptom = @disease_record.reported_symptoms.new(reported_symptom_params)
     @reported_symptom.recorded_at = Time.current
-  
+
     if @reported_symptom.save
       redirect_to new_kid_reported_symptom_path(@kid), notice: "症状を記録しました"
     else
       render :new, status: :unprocessable_entity
     end
   end
-  
+
   def summary
     @kid = Kid.find(params[:kid_id])
     @disease_record = @kid.disease_records.where(end_at: nil)
                                           .order(start_at: :desc)
                                           .first
-  
+
     if @disease_record.nil?
       redirect_to kid_path(@kid), alert: "記録中の病気がありません。"
       return
@@ -69,7 +69,7 @@ class ReportedSymptomsController < ApplicationController
     @first_symptom_dates =@reported_symptoms.where.not(symptom_name_id: nil)
                                             .group(:symptom_name_id)
                                             .minimum(:recorded_at)
-                                      
+
     if @tab == "today"
       today = Time.zone.today
 
@@ -148,13 +148,13 @@ class ReportedSymptomsController < ApplicationController
 
       records.each do |rs|
         date = rs.recorded_at.to_date
-  
+
         if rs.symptom_name
           slot_key =
             @symptom_slots.find { |_, name| name == rs.symptom_name.name }&.first
           @matrix[date][slot_key] = true if slot_key
         end
-  
+
         if rs.body_temperature.present?
           @matrix[date][:temperature] = true
         end
