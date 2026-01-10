@@ -58,9 +58,9 @@ group :development do
   gem "rubocop-rails", require: false
 
   gem "image_processing", "~> 1.2"
-
-  gem "aws-sdk-s3", '~> 1.211.0', require: false
 end
+
+gem "aws-sdk-s3", '~> 1.211.0', require: false
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
