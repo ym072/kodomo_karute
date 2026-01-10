@@ -50,7 +50,6 @@ Rails.application.configure do
   valid_levels = [:debug, :info, :warn, :error, :fatal, :unknown]
   level = (ENV.fetch("RAILS_LOG_LEVEL", "info").downcase.to_sym rescue :info)
   level = :info unless valid_levels.include?(level)
-  Rails.logger.level = level
 
   # Cache store
   # config.cache_store = :mem_cache_store
