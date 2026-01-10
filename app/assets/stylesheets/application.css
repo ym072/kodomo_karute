@@ -323,3 +323,36 @@ body {
     font-size: 24px;
     font-weight: 400;
 }
+
+.password-reset-container {
+    width: 100%;
+    max-width: 420px;
+    padding: 32px 28px;
+    background: #ede8d1;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.auth-wrapper {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ffffff;
+}  
+
+.password-reset-container .field {
+    margin-bottom: 20px;
+}
+
+.password-reset-container input[type="email"] {
+    padding: 10px;
+    width: 280px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.password-reset-container .actions {
+    margin-top: 10px;
+    flex-direction: column;
+}

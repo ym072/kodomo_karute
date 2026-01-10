@@ -63,3 +63,17 @@ en:
       not_saved:
         one: "1 error prohibited this %{resource} from being saved:"
         other: "%{count} errors prohibited this %{resource} from being saved:"
+
+ja:
+  devise:
+    mailer:
+      reset_password_instructions:
+        subject: "【こどもカルテ】パスワード再設定のご案内"
+    passwords:
+      send_instructions: "パスワード再設定用のメールを送信しました。"
+      updated: "パスワードが正常に変更されました。"
+      updated_not_active: "パスワードが変更されました。"
+
+    failure:
+      invalid: "メールアドレスまたはパスワードが正しくありません。"
+      unauthenticated: "ログインまたは新規登録してください。"
