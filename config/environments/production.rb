@@ -45,8 +45,12 @@ Rails.application.configure do
   config.logger = ActiveSupport::Logger.new(STDOUT)
     .tap  { |logger| logger.formatter = ::Logger::Formatter.new }
     .then { |logger| ActiveSupport::TaggedLogging.new(logger) }
-  config.log_tags = [ :request_id ]
-  config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info").downcase.to_sym
+  config.log_tags = [:request_id]
+
+  valid_levels = [:debug, :info, :warn, :error, :fatal, :unknown]
+  level = (ENV.fetch("RAILS_LOG_LEVEL", "info").downcase.to_sym rescue :info)
+  level = :info unless valid_levels.include?(level)
+  Rails.logger.level = level
 
   # Cache store
   # config.cache_store = :mem_cache_store
@@ -67,18 +71,17 @@ Rails.application.configure do
   # SMTP settings for Gmail via Render ENV variables
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address:              ENV["SMTP_ADDRESS"],       # smtp.gmail.com
-    port:                 ENV["SMTP_PORT"].to_i,    # 587
+    address:              ENV["SMTP_ADDRESS"],
+    port:                 ENV["SMTP_PORT"].to_i,
     domain:               "gmail.com",
-    user_name:            ENV["SMTP_USERNAME"],      # kodomo.karute@gmail.com
-    password:             ENV["SMTP_PASSWORD"],      # Google アプリパスワード
+    user_name:            ENV["SMTP_USERNAME"],
+    password:             ENV["SMTP_PASSWORD"],
     authentication:       :plain,
     enable_starttls_auto: true
   }
 
-  # メール送信元
   config.action_mailer.default_options = {
-    from: ENV["MAIL_FROM"]  # 例: "こどもカルテ <kodomo.karute@gmail.com>"
+    from: ENV["MAIL_FROM"]
   }
 
   # I18n
