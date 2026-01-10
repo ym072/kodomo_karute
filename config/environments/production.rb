@@ -46,7 +46,7 @@ Rails.application.configure do
     .tap  { |logger| logger.formatter = ::Logger::Formatter.new }
     .then { |logger| ActiveSupport::TaggedLogging.new(logger) }
   config.log_tags = [ :request_id ]
-  config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
+  config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info").downcase.to_sym
 
   # Cache store
   # config.cache_store = :mem_cache_store
