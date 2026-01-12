@@ -68,20 +68,12 @@ Rails.application.configure do
   }
 
   # SMTP settings for Gmail via Render ENV variables
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    address:              ENV["SMTP_ADDRESS"],
-    port:                 ENV["SMTP_PORT"].to_i,
-    domain:               "gmail.com",
-    user_name:            ENV["SMTP_USERNAME"],
-    password:             ENV["SMTP_PASSWORD"],
-    authentication:       :plain,
-    enable_starttls_auto: true
+  config.action_mailer.delivery_method = :resend
+  config.action_mailer.default_options = {
+    from: ENV.fetch("MAIL_FROM")
   }
 
-  config.action_mailer.default_options = {
-    from: ENV["MAIL_FROM"]
-  }
+  config.action_mailer.raise_delivery_errors = false
 
   # I18n
   config.i18n.fallbacks = true
