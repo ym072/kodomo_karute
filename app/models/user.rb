@@ -11,4 +11,14 @@ class User < ApplicationRecord
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: true
 
   has_many :kids, dependent: :destroy
+
+  validate :password_must_be_different_from_current, if: -> { password.present? && persisted? }
+
+  private
+
+  def password_must_be_different_from_current
+    if valid_password?(password)
+      errors.add(:password, :same_as_current)
+    end
+  end
 end
