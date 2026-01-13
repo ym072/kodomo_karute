@@ -428,3 +428,8 @@ body {
       font-size: 20px;
   }
 }
+
+.form-actions--oauth {
+    margin-top: 12px;
+    text-align: center;
+}
