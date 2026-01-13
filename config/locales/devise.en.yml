@@ -97,3 +97,9 @@ ja:
               invalid: "パスワード再設定用のリンクが無効です。再度お試しください。"
             password:
               same_as_current: "入力されたパスワードは現在設定されているものと同じです。別のパスワードを入力してください。"
+  time:
+    formats:
+      short: "%Y/%m/%d %H:%M"
+  date:
+    formats:
+      short: "%Y/%m/%d"
