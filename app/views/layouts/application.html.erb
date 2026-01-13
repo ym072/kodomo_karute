@@ -40,6 +40,13 @@
     </nav>
   </header>
 
-    <%= yield %>
+  <%= yield %>
+
+  <footer class="site-footer">
+    <%= link_to "利用規約", terms_path %>
+    <span>｜</span>
+    <%= link_to "プライバシーポリシー", privacy_path %>
+  </footer>
+  
   </body>
 </html>

@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get "/terms",   to: "pages#terms"
+  get "/privacy", to: "pages#privacy"
+  
   devise_for :users
 
   resources :kids, only: [ :index, :new, :create, :show ] do
