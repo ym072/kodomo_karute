@@ -328,6 +328,7 @@ body {
     width: 100%;
     max-width: 420px;
     padding: 32px 28px;
+    margin-top: 32px;
     background: #ede8d1;
     border-radius: 16px;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
@@ -337,7 +338,7 @@ body {
     min-height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     background: #ffffff;
 }  
 
