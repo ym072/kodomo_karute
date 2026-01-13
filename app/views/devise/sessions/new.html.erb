@@ -29,6 +29,13 @@
         <%= link_to "新規登録", new_registration_path(resource_name), class: "register-button" %>
       </div>
     <% end %>
+
+    <div class="form-actions form-actions--oauth">
+      <%= link_to "Googleでログイン",
+        user_google_oauth2_omniauth_authorize_path,
+        data: { turbo: false },
+        class: "login-button" %>
+    </div>
   </main>
 </body>
 </html>

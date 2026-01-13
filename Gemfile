@@ -61,6 +61,7 @@ end
 gem "aws-sdk-s3", '~> 1.211.0', require: false
 gem "image_processing", "~> 1.2"
 gem "resend"
+gem "omniauth-google-oauth2"
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]

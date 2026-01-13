@@ -2,7 +2,8 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+       :recoverable, :rememberable, :validatable,
+       :omniauthable, omniauth_providers: [:google_oauth2]
 
   validates :name, presence: true, length: { maximum: 50 }
 
@@ -14,6 +15,28 @@ class User < ApplicationRecord
 
   validate :password_must_be_different_from_current,
            if: -> { password.present? && persisted? && will_save_change_to_encrypted_password? }
+
+  def self.from_omniauth(auth)
+    provider = auth.provider
+    uid = auth.uid
+    email = auth.info.email
+
+    user = find_by(provider: provider, uid: uid)
+    return user if user
+
+    user = find_by(email: email)
+    if user
+      user.update(provider: provider, uid: uid)
+      return user
+    end
+
+    create!(
+      email: email,
+      password: Devise.friendly_token.first(20),
+      provider: provider,
+      uid: uid
+    )
+  end
 
   private
 
