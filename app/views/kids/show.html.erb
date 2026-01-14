@@ -1,22 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>medical record - 症状記録</title>
-</head>
-<body>
-  <main class="login-main">
-    <div class="kids-show">
-      <%= image_tag 'kids-show.png'%>
-    </div>
+<% content_for :title, "medical record - 症状記録" %>
 
-    <!-- フッター -->
-    <div class="footer">
-      <p>
-        <%= @kid.name %>
-      </p>
-    </div>
-  </main>
-</body>
-</html>
+<main class="login-main">
+  <div class="kids-show">
+    <%= image_tag "kids-show.png" %>
+  </div>
+
+  <!-- フッター -->
+  <div class="footer">
+    <p><%= @kid.name %></p>
+  </div>
+</main>

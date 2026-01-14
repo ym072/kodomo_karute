@@ -1,31 +1,28 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>kodomo-karute - お子さま一覧</title>
-</head>
-<body>
-  <main class="login-main">
-    <h1 class="kid-index">記録するお子さまを選択</h1>
-    <ul>
-      <% @kids.each do |kid| %>
-        <li class="kid-item">
-          <%= link_to select_kid_path(kid), class: "kid-link" do %>
-            <% if kid.icon.attached? %>
-              <%= image_tag kid.icon.variant(resize_to_fill: [72, 72]).processed, class: "kid-icon"  %>
-            <% else %>
-              <span class="kid-icon">👤</span>
-            <% end %>
-            <span class="kid-name"><%= kid.name %></span>
-          <% end %>
-        </li>
-      <% end %>
-    </ul>
+<% content_for :title, "kodomo-karute - お子さま一覧" %>
 
-    <div class="form-actions">
-        <%= link_to "お子さまを追加する", new_kid_path,class: "login-button" %>
-    </div>
-  </main>
-</body>
-</html>
+<main class="login-main">
+  <h1 class="kid-index">記録するお子さまを選択</h1>
+
+  <ul>
+    <% @kids.each do |kid| %>
+      <li class="kid-item">
+        <%= link_to select_kid_path(kid), class: "kid-link" do %>
+          <% if kid.icon.attached? %>
+            <%= image_tag kid.icon.variant(resize_to_fill: [72, 72]).processed,
+                          class: "kid-icon" %>
+          <% else %>
+            <span class="kid-icon">👤</span>
+          <% end %>
+
+          <span class="kid-name"><%= kid.name %></span>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+
+  <div class="form-actions">
+    <%= link_to "お子さまを追加する",
+                new_kid_path,
+                class: "login-button" %>
+  </div>
+</main>

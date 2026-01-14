@@ -58,7 +58,7 @@ group :development do
   gem "rubocop-rails", require: false
 end
 
-gem "aws-sdk-s3", '~> 1.211.0', require: false
+gem "aws-sdk-s3", "~> 1.211.0", require: false
 gem "image_processing", "~> 1.2"
 gem "resend"
 gem "omniauth-google-oauth2"

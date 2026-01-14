@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   get "/terms",   to: "pages#terms"
   get "/privacy", to: "pages#privacy"
-  
+
   devise_for :users, controllers: {
     passwords: "users/passwords",
     omniauth_callbacks: "users/omniauth_callbacks"

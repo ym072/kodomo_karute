@@ -45,9 +45,9 @@ Rails.application.configure do
   config.logger = ActiveSupport::Logger.new(STDOUT)
     .tap  { |logger| logger.formatter = ::Logger::Formatter.new }
     .then { |logger| ActiveSupport::TaggedLogging.new(logger) }
-  config.log_tags = [:request_id]
+  config.log_tags = [ :request_id ]
 
-  valid_levels = [:debug, :info, :warn, :error, :fatal, :unknown]
+  valid_levels = [ :debug, :info, :warn, :error, :fatal, :unknown ]
   level = (ENV.fetch("RAILS_LOG_LEVEL", "info").downcase.to_sym rescue :info)
   level = :info unless valid_levels.include?(level)
 
@@ -83,7 +83,7 @@ Rails.application.configure do
 
   # Schema dump
   config.active_record.dump_schema_after_migration = false
-  config.active_record.attributes_for_inspect = [:id]
+  config.active_record.attributes_for_inspect = [ :id ]
 
   # DNS/Host protection
   # config.hosts = [...]

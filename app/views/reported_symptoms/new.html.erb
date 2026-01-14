@@ -1,70 +1,93 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>medical record - 症状記録</title>
-</head>
-<body>
-  <main class="login-main">
-    <% if flash[:notice] %>
-      <p class="notice"><%= flash[:notice] %></p>
-    <% end %>
+<% content_for :title, "medical record - 症状記録" %>
 
-    <% if flash[:alert] %>
-      <p class="alert"><%= flash[:alert] %></p>
-    <% end %>
+<main class="login-main">
+  <% if flash[:notice] %>
+    <p class="notice"><%= flash[:notice] %></p>
+  <% end %>
 
-    <%= render "shared/error_messages", object: @kid %>
+  <% if flash[:alert] %>
+    <p class="alert"><%= flash[:alert] %></p>
+  <% end %>
 
-    <% if @show_start_popup %>
-      <div id="start-popup" class="popup">
-        <div class="popup-content">
-          <p>体調記録をスタートしますか？</p>
-          <%= button_to "スタート", start_record_kid_reported_symptoms_path(@kid),method: :post, class: "start-button" %>
-        </div>
+  <%= render "shared/error_messages", object: @kid %>
+
+  <% if @show_start_popup %>
+    <div id="start-popup" class="popup">
+      <div class="popup-content">
+        <p>体調記録をスタートしますか？</p>
+        <%= button_to "スタート",
+              start_record_kid_reported_symptoms_path(@kid),
+              method: :post,
+              class: "start-button" %>
       </div>
-    <% elsif @reported_symptom %>
-      <%= form_with model: [@kid, @reported_symptom],
-                    local: true,
-                    data: { turbo: false } do |f| %>
-        <div class="symptom-buttons">
-          <% ["頭痛","咳","鼻水","発疹","嘔吐","便"].each do |name| %>
-            <% symptom = SymptomName.find_by(name: name) %>
-            <%= button_tag name, type: "submit", name: "reported_symptom[symptom_name_id]", value: symptom.id, class: "symptom-button" %>
-          <% end %>
-        </div>
+    </div>
 
-        <div class="form-row"> 
-          <%= f.number_field :body_temperature, placeholder: "体温", step: 0.1, class: "form-control" %>
-          <%= button_tag "記録", type: "submit", name: "commit_type", value: "temperature", class: "record-button" %>
-        </div>
+  <% elsif @reported_symptom %>
+    <%= form_with model: [@kid, @reported_symptom],
+                  local: true,
+                  data: { turbo: false } do |f| %>
 
-        <div class="form-row">
-          <%= f.text_area :memo, placeholder: "メモ", rows: 2, class: "form-control" %>
-          <%= button_tag "記録", type: "submit", name: "commit_type", value: "memo", class: "record-button" %>
-        </div>
-
-        <div class="form-row">
-          <%= f.text_field :disease_name, name: "reported_symptom[disease_name]", placeholder: "病名（例: 風邪、インフルエンザなど）", class: "form-control" %>
-          <%= button_tag "記録", type: "submit", name: "commit_type", value: "disease_name", class: "record-button" %>
-        </div>
-      <% end %>
-
-      <div class="actions">
-        <%= button_to "治った！", end_update_kid_disease_record_path(@kid, @disease_record),
-              method: :patch,
-              class: "heal-button" %>
+      <div class="symptom-buttons">
+        <% ["頭痛","咳","鼻水","発疹","嘔吐","便"].each do |name| %>
+          <% symptom = SymptomName.find_by(name: name) %>
+          <%= button_tag name,
+                type: "submit",
+                name: "reported_symptom[symptom_name_id]",
+                value: symptom.id,
+                class: "symptom-button" %>
+        <% end %>
       </div>
 
-      <!-- フッター -->
-      <div class="footer">
-        <p>
-          <%= @kid.name %> ／ 記録開始日：<%= @disease_record.start_at&.strftime("%Y年%m月%d日") %>
-        </p>
+      <div class="form-row">
+        <%= f.number_field :body_temperature,
+              placeholder: "体温",
+              step: 0.1,
+              class: "form-control" %>
+        <%= button_tag "記録",
+              type: "submit",
+              name: "commit_type",
+              value: "temperature",
+              class: "record-button" %>
+      </div>
+
+      <div class="form-row">
+        <%= f.text_area :memo,
+              placeholder: "メモ",
+              rows: 2,
+              class: "form-control" %>
+        <%= button_tag "記録",
+              type: "submit",
+              name: "commit_type",
+              value: "memo",
+              class: "record-button" %>
+      </div>
+
+      <div class="form-row">
+        <%= f.text_field :disease_name,
+              name: "reported_symptom[disease_name]",
+              placeholder: "病名（例: 風邪、インフルエンザなど）",
+              class: "form-control" %>
+        <%= button_tag "記録",
+              type: "submit",
+              name: "commit_type",
+              value: "disease_name",
+              class: "record-button" %>
       </div>
     <% end %>
 
-  </main>
-</body>
-</html>
+    <div class="actions">
+      <%= button_to "治った！",
+            end_update_kid_disease_record_path(@kid, @disease_record),
+            method: :patch,
+            class: "heal-button" %>
+    </div>
+
+    <!-- フッター -->
+    <div class="footer">
+      <p>
+        <%= @kid.name %> ／
+        記録開始日：<%= @disease_record.start_at&.strftime("%Y年%m月%d日") %>
+      </p>
+    </div>
+  <% end %>
+</main>

@@ -1,40 +1,37 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>medical record - 新規登録</title>
-</head>
-<body>
-  <main class="login-main">
-    <%= render "shared/error_messages", object: resource %>
+<% content_for :title, "medical record - 新規登録" %>
 
-    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "login-form" }) do |f| %>
+<main class="login-main">
+  <%= render "shared/error_messages", object: resource %>
 
-      <!-- 名前  -->
-      <div class="form-group">
-        <%= f.label :name, "名前" %>
-        <%= f.text_field :name, autofocus: true, class: "form-control" %>
-      </div>
+  <%= form_for(resource,
+               as: resource_name,
+               url: registration_path(resource_name),
+               html: { class: "login-form" }) do |f| %>
 
-      <!-- メールアドレス  -->
-      <div class="form-group">
-        <%= f.label :email, "メールアドレス" %>
-        <%= f.email_field :email, class: "form-control" %>
-      </div>
+    <!-- 名前 -->
+    <div class="form-group">
+      <%= f.label :name, "名前" %>
+      <%= f.text_field :name, autofocus: true, class: "form-control" %>
+    </div>
 
-      <!-- パスワード  -->
-      <div class="form-group">
-        <%= f.label :password, "パスワード" %>
-        <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
-      </div>
+    <!-- メールアドレス -->
+    <div class="form-group">
+      <%= f.label :email, "メールアドレス" %>
+      <%= f.email_field :email, class: "form-control" %>
+    </div>
 
-      <!-- 登録ボタン  -->
-      <div class="actions">
-        <%= f.submit "新規登録", class: "register-button" %>
-      </div>
+    <!-- パスワード -->
+    <div class="form-group">
+      <%= f.label :password, "パスワード" %>
+      <%= f.password_field :password,
+                            autocomplete: "new-password",
+                            class: "form-control" %>
+    </div>
 
-    <% end %>
-  </main>
-</body>
-</html>
+    <!-- 登録ボタン -->
+    <div class="actions">
+      <%= f.submit "新規登録", class: "register-button" %>
+    </div>
+
+  <% end %>
+</main>

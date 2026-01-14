@@ -29,7 +29,7 @@
   <body>
   <header class="site-header">
     <%= link_to (user_signed_in? ? kids_path : new_user_session_path), class: "logo-link" do %>
-    <%= image_tag 'logo.png', size: "100x100" %>
+    <%= image_tag 'logo.png', class: "site-logo" %>
     <% end %>
 
     <% unless user_signed_in? %>

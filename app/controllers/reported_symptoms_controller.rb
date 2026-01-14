@@ -163,7 +163,7 @@ class ReportedSymptomsController < ApplicationController
       today = Time.zone.today
       @active_symptoms = @symptom_slots.filter_map do |key, label|
         next unless @matrix.dig(today, key)
-      
+
         symptom = SymptomName.find_by(name: label)
         days = symptom ? @symptom_day_counts[symptom.id] : nil
         { key: key, label: label, days: days }
@@ -177,7 +177,7 @@ class ReportedSymptomsController < ApplicationController
           { key: key, label: label }
          end
       end
-      
+
       @end_date = Time.zone.today
       @start_date = @disease_record.start_at.to_date
 

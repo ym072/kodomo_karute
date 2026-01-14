@@ -1,38 +1,34 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>medical record - お子さま登録</title>
-</head>
-<body>
-  <main class="login-main">
-    <%= render "shared/error_messages", object: @kid %>
+<% content_for :title, "medical record - お子さま登録" %>
 
-    <%= form_for(@kid, url: kids_path, html: { class: "login-form", multipart: true }) do |f| %>
-      
-      <!-- 子どもの名前 -->
-      <div class="form-group">
-        <%= f.label :name, "お子さまの名前" %>
-        <%= f.text_field :name, autofocus: true, class: "form-control" %>
-      </div>
+<main class="login-main">
+  <%= render "shared/error_messages", object: @kid %>
 
-      <!-- 生年月日 -->
-      <div class="form-group">
-        <%= f.label :birthday, "生年月日" %>
-        <%= f.date_field :birthday, class: "form-control" %>
-      </div>
+  <%= form_for(@kid,
+               url: kids_path,
+               html: { class: "login-form", multipart: true }) do |f| %>
 
-      <!-- アイコン -->
-      <div class="form-group">
-        <%= f.label :icon, "お子さまのアイコン" %>
-        <%= f.file_field :icon, accept: "image/*", class: "form-control" %>
-      </div>
+    <!-- 子どもの名前 -->
+    <div class="form-group">
+      <%= f.label :name, "お子さまの名前" %>
+      <%= f.text_field :name, autofocus: true, class: "form-control" %>
+    </div>
 
-      <div class="form-actions">
-        <%= f.submit "登録", class: "login-button" %>
-      </div>
-    <% end %>
-  </main>
-</body>
-</html>
+    <!-- 生年月日 -->
+    <div class="form-group">
+      <%= f.label :birthday, "生年月日" %>
+      <%= f.date_field :birthday, class: "form-control" %>
+    </div>
+
+    <!-- アイコン -->
+    <div class="form-group">
+      <%= f.label :icon, "お子さまのアイコン" %>
+      <%= f.file_field :icon,
+                        accept: "image/*",
+                        class: "form-control" %>
+    </div>
+
+    <div class="form-actions">
+      <%= f.submit "登録", class: "login-button" %>
+    </div>
+  <% end %>
+</main>
