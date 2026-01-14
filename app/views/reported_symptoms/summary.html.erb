@@ -7,20 +7,25 @@
 </head>
 <body>
   <main class="login-main">
-  <h2>症状サマリー</h2>
+  <div class="summary-header">
+    <h2>症状サマリー</h2>
+  </div>
 
+  <div class="tabs-wrap">
   <div class="tabs">
   <%= link_to "今日",
     summary_kid_reported_symptoms_path(@kid, tab: "today"),
-    class: (@tab == "today" ? "active" : "") %>
+    class: "tab #{@tab == 'today' ? 'active' : ''}" %>
 
   <%= link_to "全期間",
     summary_kid_reported_symptoms_path(@kid, tab: "all"),
-    class: (@tab == "all" ? "active" : "") %>
+    class: "tab #{@tab == 'all' ? 'active' : ''}" %>
   </div>
-
+  
+  <div class="tab-content">
   <% if @tab == "today" %>
-    <h2><%= Date.today %>（発症 <%= @day_count %> 日目）</h2>
+    
+    <h3><%= Date.today %>（発症 <%= @day_count %> 日目）</h3>
 
     <% if @latest_temperature %>
       <p>
@@ -31,8 +36,6 @@
       <% else %>
         <p>本日の体温記録はありません</p>
     <% end %>
-
-    <h3>今日の症状</h3>
 
     <% if @vomit_count > 0 %>
       <p>
@@ -115,6 +118,8 @@
     </div>
 
   <% end %>
+  </div>
+  </div>
 
   <div class="footer">
     <p>
