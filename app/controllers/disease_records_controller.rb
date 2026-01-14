@@ -2,10 +2,6 @@ class DiseaseRecordsController < ApplicationController
   before_action :set_kid
   before_action :set_disease_record, only: [ :end_form, :end_update ]
 
-  def new
-    @disease_record = @kid.disease_records.new
-  end
-
   def create
     @disease_record = @kid.disease_records.build(disease_record_params)
     if @disease_record.save

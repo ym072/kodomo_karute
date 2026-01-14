@@ -12,7 +12,7 @@ Rails.application.routes.draw do
       get :select
     end
 
-    resources :disease_records, only: [ :new, :create ] do
+    resources :disease_records, only: [ :create ] do
       member do
         get :end_form
         patch :end_update
