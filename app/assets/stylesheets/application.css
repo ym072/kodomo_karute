@@ -720,3 +720,76 @@ body {
     margin-top: 12px;
     text-align: center;
 }
+
+.record-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 12px;
+  }
+  
+  .record-card {
+    background: #fff;
+    border: 1px solid #ede8d1;
+    border-radius: 14px;
+    padding: 14px 14px 12px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+  }
+  
+  .record-card__header {
+    display: grid;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+  
+  .record-period {
+    font-size: 12px;
+    color: #666;
+  }
+  
+  .record-period__sep {
+    margin: 0 6px;
+    color: #999;
+  }
+  
+  .record-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: #da6220;
+  }
+  
+  .record-symptoms {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+  
+  .mini-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: #ede8d1;
+    color: #da6220;
+    font-size: 12px;
+    border: 1px solid rgba(218, 98, 32, 0.12);
+  }
+  
+  .record-symptoms__empty {
+    font-size: 12px;
+    color: #777;
+  }
+
+  .search-button {
+    display: inline-flex;
+  padding: 6px 18px;
+  background-color: #ede8d1;
+  color: #da6220;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  align-items: center;
+  margin-bottom: 50px;
+  }
