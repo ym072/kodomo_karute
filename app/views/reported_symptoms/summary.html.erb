@@ -66,41 +66,63 @@
   <% if @tab == "all" %>
     <div class="symptom-legend">
       <% @symptom_slots.each do |key, label| %>
-        <div class="legend-item">
-          <span class="legend-color <%= key %>"></span>
-          <span class="legend-label"><%= label %></span>
-        </div>
       <% end %>
     </div>
 
-    <div class="weekly-matrix">
+    <section class="streak">
+      <h3 class="section-title">続いている症状（今日）</h3>
+
+      <% if @active_symptoms.present? %>
+        <div class="streak-cards">
+          <% @active_symptoms.each do |s| %>
+            <div class="streak-card">
+              <span class="streak-dot <%= s[:key] %>"></span>
+              <span class="streak-label"><%= s[:label] %></span>
+              <% if s[:days].present? %>
+                <span class="streak-days"><%= s[:days] %>日目</span>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="muted">今日は記録された症状はありません</p>
+      <% end %>
+    </section>
+
+    <section class="daily-log">
+      <h3 class="section-title">これまでの経過</h3>
 
       <% [:last, :this].each do |week_key| %>
-        <div class="week-column">
-          <h3><%= week_key == :last ? "先週" : "今週" %></h3>
+        <div class="week-card">
+          <div class="week-title"><%= week_key == :this ? "今週" : "先週" %></div>
 
           <% @weeks[week_key].each do |date| %>
-            <div class="day-row">
-              <div class="weekday">
-                <%= date.strftime("%a") %>
+            <% items = @daily_symptoms[date] || [] %>
+
+            <div class="day-item">
+              <div class="day-date">
+                <span class="day-wday"><%= date.strftime("%a") %></span>
+                <span class="day-md"><%= date.strftime("%-m/%-d") %></span>
               </div>
 
-              <div class="symptom-cells">
-                <% @symptom_slots.each do |key, label| %>
-                  <div class="symptom-cell <%= "active #{key}" if @matrix[date][key] %>">
-                  </div>
+              <div class="day-tags">
+                <% if items.any? %>
+                  <% items.each do |t| %>
+                    <span class="tag <%= t[:key] %>"><%= t[:label] %></span>
+                  <% end %>
+               <% else %>
+                  <span class="muted">症状なし</span>
                 <% end %>
               </div>
             </div>
-
           <% end %>
-
         </div>
       <% end %>
-    </div>
+    </section>
+
 
     <div class="symptom-trend">
-      <h3>症状の推移</h3>
+    <h3 class="section-title">体温/嘔吐/便の推移</h3>
 
       <canvas id="symptomTrendChart"
         data-chart="<%= j @chart_data.to_json %>">
