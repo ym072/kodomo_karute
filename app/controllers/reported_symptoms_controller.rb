@@ -70,6 +70,13 @@ class ReportedSymptomsController < ApplicationController
                                             .group(:symptom_name_id)
                                             .minimum(:recorded_at)
 
+    today = Time.zone.today
+
+    @symptom_day_counts = {}
+    @first_symptom_dates.each do |symptom_id, first_time|
+      @symptom_day_counts[symptom_id] = (today - first_time.to_date).to_i + 1
+    end
+
     if @tab == "today"
       today = Time.zone.today
 
@@ -93,13 +100,6 @@ class ReportedSymptomsController < ApplicationController
 
       @diarrhea_count =
         diarrhea_id ? @today_symptoms.where(symptom_name_id: diarrhea_id).count : 0
-
-      @symptom_day_counts = {}
-
-      @first_symptom_dates.each do |symptom_id, first_time|
-        @symptom_day_counts[symptom_id] =
-          (today - first_time.to_date).to_i + 1
-      end
 
       @today_symptom_names =
         @today_symptoms
@@ -160,6 +160,24 @@ class ReportedSymptomsController < ApplicationController
         end
       end
 
+      today = Time.zone.today
+      @active_symptoms = @symptom_slots.filter_map do |key, label|
+        next unless @matrix.dig(today, key)
+      
+        symptom = SymptomName.find_by(name: label)
+        days = symptom ? @symptom_day_counts[symptom.id] : nil
+        { key: key, label: label, days: days }
+      end
+
+      dates = @weeks[:this] + @weeks[:last]
+
+      @daily_symptoms = dates.index_with do |date|
+        @symptom_slots.filter_map do |key, label|
+          next unless @matrix.dig(date, key)
+          { key: key, label: label }
+         end
+      end
+      
       @end_date = Time.zone.today
       @start_date = @disease_record.start_at.to_date
 
