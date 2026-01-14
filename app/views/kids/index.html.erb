@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>medical record - お子さま一覧</title>
+  <title>kodomo-karute - お子さま一覧</title>
 </head>
 <body>
   <main class="login-main">
+    <h1 class="kid-index">記録するお子さまを選択</h1>
     <ul>
       <% @kids.each do |kid| %>
         <li class="kid-item">
@@ -23,7 +24,7 @@
     </ul>
 
     <div class="form-actions">
-        <%= link_to "新規登録", new_kid_path,class: "login-button" %>
+        <%= link_to "お子さまを追加する", new_kid_path,class: "login-button" %>
     </div>
   </main>
 </body>
