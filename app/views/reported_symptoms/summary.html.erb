@@ -1,153 +1,138 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>medical record - 症状記録</title>
-</head>
-<body>
-  <main class="login-main">
+<% content_for :title, "medical record - 症状記録" %>
+
+<main class="login-main">
   <div class="summary-header">
     <h2>症状サマリー</h2>
   </div>
 
   <div class="tabs-wrap">
-  <div class="tabs">
-  <%= link_to "今日",
-    summary_kid_reported_symptoms_path(@kid, tab: "today"),
-    class: "tab #{@tab == 'today' ? 'active' : ''}" %>
+    <div class="tabs">
+      <%= link_to "今日",
+            summary_kid_reported_symptoms_path(@kid, tab: "today"),
+            class: "tab #{@tab == 'today' ? 'active' : ''}" %>
 
-  <%= link_to "全期間",
-    summary_kid_reported_symptoms_path(@kid, tab: "all"),
-    class: "tab #{@tab == 'all' ? 'active' : ''}" %>
-  </div>
-  
-  <div class="tab-content">
-  <% if @tab == "today" %>
-    
-    <h3><%= Date.today %>（発症 <%= @day_count %> 日目）</h3>
-
-    <% if @latest_temperature %>
-      <p>
-        最新体温：
-        <%= @latest_temperature.body_temperature %>℃
-        （<%= l @latest_temperature.recorded_at, format: :short %>）
-      </p>
-      <% else %>
-        <p>本日の体温記録はありません</p>
-    <% end %>
-
-    <% if @vomit_count > 0 %>
-      <p>
-        嘔吐：<%= @vomit_count %>回
-         （<%= @symptom_day_counts[SymptomName.find_by(name: "嘔吐").id] %>日目）
-      </p>
-    <% end %>
-
-    <% if @diarrhea_count > 0 %>
-      <p>
-        便：<%= @diarrhea_count %>回
-         （<%= @symptom_day_counts[SymptomName.find_by(name: "便").id] %>日目）
-      </p>
-    <% end %>
-
-    <ul>
-      <% @today_symptom_names.each do |s| %>
-        <% next if ["嘔吐", "便"].include?(s.symptom_name.name) %>
-
-        <li>
-          <%= s.symptom_name.name %>:
-          <%= @symptom_day_counts[s.symptom_name_id] %>日目
-        </li>
-      <% end %>
-    </ul>
-  <% end %>
-
-  <% if @tab == "all" %>
-    <div class="symptom-legend">
-      <% @symptom_slots.each do |key, label| %>
-      <% end %>
+      <%= link_to "全期間",
+            summary_kid_reported_symptoms_path(@kid, tab: "all"),
+            class: "tab #{@tab == 'all' ? 'active' : ''}" %>
     </div>
 
-    <section class="streak">
-      <h3 class="section-title">続いている症状（今日）</h3>
+    <div class="tab-content">
+      <% if @tab == "today" %>
+        <h3><%= Date.today %>（発症 <%= @day_count %> 日目）</h3>
 
-      <% if @active_symptoms.present? %>
-        <div class="streak-cards">
-          <% @active_symptoms.each do |s| %>
-            <div class="streak-card">
-              <span class="streak-dot <%= s[:key] %>"></span>
-              <span class="streak-label"><%= s[:label] %></span>
-              <% if s[:days].present? %>
-                <span class="streak-days"><%= s[:days] %>日目</span>
+        <% if @latest_temperature %>
+          <p>
+            最新体温：
+            <%= @latest_temperature.body_temperature %>℃
+            （<%= l @latest_temperature.recorded_at, format: :short %>）
+          </p>
+        <% else %>
+          <p>本日の体温記録はありません</p>
+        <% end %>
+
+        <% if @vomit_count > 0 %>
+          <p>
+            嘔吐：<%= @vomit_count %>回
+            （<%= @symptom_day_counts[SymptomName.find_by(name: "嘔吐").id] %>日目）
+          </p>
+        <% end %>
+
+        <% if @diarrhea_count > 0 %>
+          <p>
+            便：<%= @diarrhea_count %>回
+            （<%= @symptom_day_counts[SymptomName.find_by(name: "便").id] %>日目）
+          </p>
+        <% end %>
+
+        <ul>
+          <% @today_symptom_names.each do |s| %>
+            <% next if ["嘔吐", "便"].include?(s.symptom_name.name) %>
+
+            <li>
+              <%= s.symptom_name.name %>:
+              <%= @symptom_day_counts[s.symptom_name_id] %>日目
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+
+      <% if @tab == "all" %>
+        <div class="symptom-legend">
+          <% @symptom_slots.each do |key, label| %>
+          <% end %>
+        </div>
+
+        <section class="streak">
+          <h3 class="section-title">続いている症状（今日）</h3>
+
+          <% if @active_symptoms.present? %>
+            <div class="streak-cards">
+              <% @active_symptoms.each do |s| %>
+                <div class="streak-card">
+                  <span class="streak-dot <%= s[:key] %>"></span>
+                  <span class="streak-label"><%= s[:label] %></span>
+                  <% if s[:days].present? %>
+                    <span class="streak-days"><%= s[:days] %>日目</span>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          <% else %>
+            <p class="muted">今日は記録された症状はありません</p>
+          <% end %>
+        </section>
+
+        <section class="daily-log">
+          <h3 class="section-title">これまでの経過</h3>
+
+          <% [:last, :this].each do |week_key| %>
+            <div class="week-card">
+              <div class="week-title"><%= week_key == :this ? "今週" : "先週" %></div>
+
+              <% @weeks[week_key].each do |date| %>
+                <% items = @daily_symptoms[date] || [] %>
+
+                <div class="day-item">
+                  <div class="day-date">
+                    <span class="day-wday"><%= date.strftime("%a") %></span>
+                    <span class="day-md"><%= date.strftime("%-m/%-d") %></span>
+                  </div>
+
+                  <div class="day-tags">
+                    <% if items.any? %>
+                      <% items.each do |t| %>
+                        <span class="tag <%= t[:key] %>"><%= t[:label] %></span>
+                      <% end %>
+                    <% else %>
+                      <span class="muted">症状なし</span>
+                    <% end %>
+                  </div>
+                </div>
               <% end %>
             </div>
           <% end %>
-        </div>
-      <% else %>
-        <p class="muted">今日は記録された症状はありません</p>
-      <% end %>
-    </section>
+        </section>
 
-    <section class="daily-log">
-      <h3 class="section-title">これまでの経過</h3>
+        <div class="symptom-trend">
+          <h3 class="section-title">体温/嘔吐/便の推移</h3>
 
-      <% [:last, :this].each do |week_key| %>
-        <div class="week-card">
-          <div class="week-title"><%= week_key == :this ? "今週" : "先週" %></div>
+          <canvas id="symptomTrendChart" data-chart="<%= j @chart_data.to_json %>"></canvas>
 
-          <% @weeks[week_key].each do |date| %>
-            <% items = @daily_symptoms[date] || [] %>
+          <script type="module">
+            import { renderSymptomTrendChart } from "charts/symptom_trend_chart";
 
-            <div class="day-item">
-              <div class="day-date">
-                <span class="day-wday"><%= date.strftime("%a") %></span>
-                <span class="day-md"><%= date.strftime("%-m/%-d") %></span>
-              </div>
-
-              <div class="day-tags">
-                <% if items.any? %>
-                  <% items.each do |t| %>
-                    <span class="tag <%= t[:key] %>"><%= t[:label] %></span>
-                  <% end %>
-               <% else %>
-                  <span class="muted">症状なし</span>
-                <% end %>
-              </div>
-            </div>
-          <% end %>
+            document.addEventListener("DOMContentLoaded", () => {
+              const canvas = document.getElementById("symptomTrendChart");
+              const data = <%= raw @chart_data.to_json %>;
+              renderSymptomTrendChart(canvas, data);
+            });
+          </script>
         </div>
       <% end %>
-    </section>
-
-
-    <div class="symptom-trend">
-    <h3 class="section-title">体温/嘔吐/便の推移</h3>
-
-      <canvas id="symptomTrendChart"
-        data-chart="<%= j @chart_data.to_json %>">
-      </canvas>
-
-      <script type="module">
-        import { renderSymptomTrendChart } from "charts/symptom_trend_chart";
-
-        document.addEventListener("DOMContentLoaded", () => {
-          const canvas = document.getElementById("symptomTrendChart");
-          const data = <%= raw @chart_data.to_json %>;
-          renderSymptomTrendChart(canvas, data);
-        });
-      </script>
     </div>
-
-  <% end %>
-  </div>
   </div>
 
   <div class="footer">
-    <p>
-      <%= @kid.name %>
-    </p>
+    <p><%= @kid.name %></p>
   </div>
-  </main>
-</body>
-</html>
+</main>

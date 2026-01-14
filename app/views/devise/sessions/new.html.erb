@@ -1,41 +1,33 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>medical record - ログイン</title>
-</head>
-<body>
-  <main class="login-main">
-    <%= render "shared/error_messages", object: resource %>
+<% content_for :title, "medical record - ログイン" %>
 
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "login-form" }) do |f| %>
-      
-      <!-- メールアドレス -->
-      <div class="form-group">
-        <%= f.label :email, "メールアドレス" %>
-        <%= f.email_field :email, autofocus: true, class: "form-control" %>
-      </div>
+<main class="login-main">
+  <%= render "shared/error_messages", object: resource %>
 
-      <!-- パスワード -->
-      <div class="form-group">
-        <%= f.label :password, "パスワード" %>
-        <%= f.password_field :password, autocomplete: "current-password", class: "form-control" %>
-        <%= link_to "パスワードを忘れた方はこちら", new_user_password_path %>
-      </div>
-
-      <div class="form-actions">
-        <%= f.submit "ログイン", class: "login-button" %>
-        <%= link_to "新規登録", new_registration_path(resource_name), class: "register-button" %>
-      </div>
-    <% end %>
-
-    <div class="form-actions form-actions--oauth">
-      <%= link_to "Googleでログイン",
-        user_google_oauth2_omniauth_authorize_path,
-        data: { turbo: false },
-        class: "login-button" %>
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "login-form" }) do |f| %>
+    
+    <!-- メールアドレス -->
+    <div class="form-group">
+      <%= f.label :email, "メールアドレス" %>
+      <%= f.email_field :email, autofocus: true, class: "form-control" %>
     </div>
-  </main>
-</body>
-</html>
+
+    <!-- パスワード -->
+    <div class="form-group">
+      <%= f.label :password, "パスワード" %>
+      <%= f.password_field :password, autocomplete: "current-password", class: "form-control" %>
+      <%= link_to "パスワードを忘れた方はこちら", new_user_password_path %>
+    </div>
+
+    <div class="form-actions">
+      <%= f.submit "ログイン", class: "login-button" %>
+      <%= link_to "新規登録", new_registration_path(resource_name), class: "register-button" %>
+    </div>
+  <% end %>
+
+  <div class="form-actions form-actions--oauth">
+    <%= link_to "Googleでログイン",
+      user_google_oauth2_omniauth_authorize_path,
+      data: { turbo: false },
+      class: "login-button" %>
+  </div>
+</main>

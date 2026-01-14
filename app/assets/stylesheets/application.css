@@ -37,6 +37,9 @@ body {
     z-index: 100;
     gap: 12px;
     margin-bottom: 40px;
+    min-height: 72px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .menu-toggle {
@@ -727,46 +730,46 @@ body {
     margin: 0;
     display: grid;
     gap: 12px;
-  }
+}
   
-  .record-card {
+.record-card {
     background: #fff;
     border: 1px solid #ede8d1;
     border-radius: 14px;
     padding: 14px 14px 12px;
     box-shadow: 0 6px 18px rgba(0,0,0,0.05);
-  }
+}
   
-  .record-card__header {
+.record-card__header {
     display: grid;
     gap: 6px;
     margin-bottom: 10px;
-  }
+}
   
-  .record-period {
+.record-period {
     font-size: 12px;
     color: #666;
-  }
+}
   
-  .record-period__sep {
+.record-period__sep {
     margin: 0 6px;
     color: #999;
-  }
+}
   
-  .record-name {
+.record-name {
     font-size: 15px;
     font-weight: 600;
     color: #da6220;
-  }
+}
   
-  .record-symptoms {
+.record-symptoms {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
     align-items: center;
-  }
+}
   
-  .mini-tag {
+.mini-tag {
     display: inline-flex;
     align-items: center;
     padding: 5px 10px;
@@ -775,14 +778,14 @@ body {
     color: #da6220;
     font-size: 12px;
     border: 1px solid rgba(218, 98, 32, 0.12);
-  }
+}
   
-  .record-symptoms__empty {
+.record-symptoms__empty {
     font-size: 12px;
     color: #777;
-  }
+}
 
-  .search-button {
+.search-button {
     display: inline-flex;
   padding: 6px 18px;
   background-color: #ede8d1;
@@ -792,20 +795,23 @@ body {
   font-size: 16px;
   align-items: center;
   margin-bottom: 50px;
-  }
-
-
-
-
+}
 
 .header-auth{
     display: flex;
     gap: 10px;
     align-items: center;
     margin-left: auto;
-  }
+    flex-wrap: nowrap;
+    white-space: nowrap;
+}
+
+.logo-link img{
+  height: 56px;
+  width: auto;
+}
   
-  .auth-button{
+.auth-button{
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -817,45 +823,45 @@ body {
     border: 1px solid #da6220;
     background: #da6220;
     color: #ffffff;
-  }
+}
   
-  .auth-button--signup{
+.auth-button--signup{
     background: #da6220;
     color: #ffffff;
     border-color: #da6220;
-  }
+}
   
-  .lp{
+.lp{
     max-width: 980px;
     margin: 0 auto;
     padding: 0 16px 48px;
-  }
+}
   
-  .lp-hero{
+.lp-hero{
     display: grid;
     grid-template-columns: 1.1fr 0.9fr;
     gap: 24px;
     align-items: center;
     margin-bottom: 40px;
-  }
+}
   
-  .lp-hero__title{
+.lp-hero__title{
     font-size: 35px;
     margin: 0 0 10px;
     color: #da6220;
-  }
+}
   
-  .lp-hero__lead{
+.lp-hero__lead{
     margin: 0 0 18px;
     line-height: 1.8;
     font-size: 16px;
-  }
+}
   
-  .lp-hero__cta--center{
+.lp-hero__cta--center{
     justify-content: center;
-  }
+}
   
-  .lp-cta{
+.lp-cta{
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -864,69 +870,69 @@ body {
     text-decoration: none;
     font-size: 16px;
     border: 1px solid #da6220;
-  }
+}
   
-  .lp-cta--primary{
+.lp-cta--primary{
     background: #da6220;
     color: #ffffff;
-  }
+}
   
-  .lp-hero__note{
+.lp-hero__note{
     margin: 8px 0 0;
     font-size: 13px;
     color: #666;
     line-height: 1.6;
-  }
+}
 
-  .lp-section{
+.lp-section{
     margin: 34px 0;
-  }
+}
   
-  .lp-section--center{
+.lp-section--center{
     text-align: center;
-  }
+}
   
-  .lp-section__title{
+.lp-section__title{
     font-size: 22px;
     margin: 0 0 18px;
     color: #7a4a2e;
-  }
+}
   
-  .lp-cards{
+.lp-cards{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 14px;
-  }
-  
-  .lp-card{
+}
+
+.lp-card{
     background: #ffffff;
     border: 1px solid #f0f0f0;
     border-radius: 16px;
     padding: 16px;
     box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-  }
+}
   
-  .lp-card__title{
+.lp-card__title{
     margin: 0 0 8px;
     font-size: 18px;
     color: #da6220;
-  }
+}
   
-  .lp-card__text{
+.lp-card__text{
     margin: 0;
     line-height: 1.8;
     font-size: 14px;
-  }
+}
   
-  .lp-steps{
+.lp-steps{
     list-style: none;
     padding: 0;
     margin: 0;
     display: grid;
     gap: 12px;
-  }
+}
   
-  .lp-step{
+.lp-step{
     display: grid;
     grid-template-columns: 40px 1fr;
     gap: 12px;
@@ -935,9 +941,9 @@ body {
     border: 1px solid #f0f0f0;
     border-radius: 16px;
     padding: 14px 16px;
-  }
+}
   
-  .lp-step__num{
+.lp-step__num{
     width: 40px;
     height: 40px;
     border-radius: 999px;
@@ -947,32 +953,238 @@ body {
     background: #ede8d1;
     color: #da6220;
     font-weight: 700;
-  }
+}
   
-  .lp-step__title{
+.lp-step__title{
     margin: 0 0 4px;
     font-size: 16px;
-  }
+}
   
-  .lp-step__text{
+.lp-step__text{
     margin: 0;
     line-height: 1.8;
     font-size: 14px;
-  }
+}
   
-  .lp-bullets{
+.lp-bullets{
     margin: 0;
     padding-left: 1.2em;
     line-height: 2;
     font-size: 15px;
-  }
+}
   
-  @media (max-width: 860px){
-    .lp-hero{
+@media (max-width: 860px){
+  .lp-hero{
       grid-template-columns: 1fr;
-    }
-    .lp-cards{
-      grid-template-columns: 1fr;
-    }
   }
+  .lp-cards{
+      grid-template-columns: 1fr;
+  }
+}
   
+/* ===== Responsive(SE〜大きめスマホ対応) ===== */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+@media (max-width: 480px) {
+  .site-header {
+    flex-wrap: nowrap;
+    gap: 10px;
+    margin-bottom: 22px;
+    padding: 8px 12px;
+    min-height: 64px;
+  }
+
+  .logo-link img{
+    height: 44px;
+  }
+
+  .site-logo{
+     height: 56px; width: auto; 
+  }
+
+  @media (max-width: 480px){
+     .site-logo{ height: 44px; }
+  }
+
+
+  .nav-menu {
+    width: 100%;
+    justify-content: flex-start;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 6px 0 0;
+    gap: 8px;
+  }
+
+  .nav-button {
+    white-space: nowrap;
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+
+  .header-auth {
+    width: 100%;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+
+  .auth-button {
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+
+  .login-main {
+    padding: 18px 14px;
+  }
+
+  .form-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .form-row.form-row--date {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .date-separator {
+    text-align: center;
+    width: 100%;
+  }
+
+  .form-control {
+    width: 100%;
+  }
+
+  .record-button {
+    width: 100%;
+    height: 42px;
+  }
+
+  .form-actions--oauth .login-button {
+    width: 100%;
+  }
+
+  .symptom-buttons {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    justify-content: stretch;
+  }
+
+  .symptom-button {
+    width: 100%;
+    height: 72px;
+    border-radius: 18px;
+    margin-bottom: 0;
+    font-size: 15px;
+  }
+
+  .kid-link {
+    padding: 12px 14px;
+  }
+
+  .kid-icon {
+    width: 56px;
+    height: 56px;
+    font-size: 20px;
+  }
+
+  .kid-name {
+    font-size: 1rem;
+  }
+
+  .kids-show {
+    padding: 0 6px;
+  }
+
+  .tab {
+    padding: 10px 0;
+    font-size: 14px;
+  }
+
+  .tab-content {
+    padding: 12px;
+  }
+
+  .day-item {
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px 0;
+  }
+
+  .day-date {
+    width: auto;
+    text-align: left;
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+  }
+
+  .day-wday {
+    display: inline;
+  }
+
+  .day-md {
+    display: inline;
+  }
+
+  #symptomTrendChart {
+    width: 100% !important;
+    height: auto !important;
+    display: block;
+  }
+
+  .symptom-trend {
+    padding: 12px 10px;
+  }
+
+  .lp {
+    padding: 0 14px 36px;
+  }
+
+  .lp-hero__title {
+    font-size: 28px;
+  }
+
+  .lp-section__title {
+    font-size: 20px;
+  }
+
+  .lp-hero__cta {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+  }
+
+  .lp-cta {
+    width: 100%;
+  }
+}
+
+/* ===== 481px〜768px : 普通のスマホ〜小型タブレット ===== */
+@media (max-width: 768px) {
+  .login-main {
+    max-width: 520px;
+  }
+
+  .symptom-buttons {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .symptom-button {
+    width: 100%;
+    height: 80px;
+    margin-bottom: 0;
+    border-radius: 20px;
+  }
+}
