@@ -28,12 +28,12 @@ module RequestSpecHelper
       end_at: end_at
     )
   end
-  
+
   def create_symptom_name!(name: "咳")
     SymptomName.create!(name: name)
   end
 end
-  
+
 RSpec.configure do |config|
   config.include RequestSpecHelper, type: :request
 end

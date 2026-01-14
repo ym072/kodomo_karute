@@ -1,7 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "DiseaseRecords", type: :request do
-
   it "createできる" do
     user = create_user!(email: "dr_create@example.com")
     sign_in user
