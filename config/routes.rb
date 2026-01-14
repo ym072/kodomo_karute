@@ -31,7 +31,7 @@ Rails.application.routes.draw do
 
   # get "signup", to: "users#new"
   # ↓今後rootをpages/homeに変更予定
-  root to: redirect("/users/sign_in")
+  root "pages#home"
   get "pages/home"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

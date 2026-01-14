@@ -32,6 +32,13 @@
     <%= image_tag 'logo.png', size: "100x100" %>
     <% end %>
 
+    <% unless user_signed_in? %>
+    <div class="header-auth">
+      <%= link_to "ログイン", new_user_session_path, class: "auth-button auth-button--login" %>
+      <%= link_to "新規登録", new_user_registration_path, class: "auth-button auth-button--signup" %>
+    </div>
+  <% end %>
+
     <% on_kids_pages = controller_name == "kids" && action_name.in?(%w[index new create edit update]) %>
     <% show_kid_nav = user_signed_in? && current_kid.present? && !on_kids_pages %>
     <% if show_kid_nav %>
