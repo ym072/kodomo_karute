@@ -50,28 +50,24 @@
 今回作成するアプリ：サマリーで確認（何日から何の症状があるか、下痢は1日に何回あったかサマリーでまとめ済み）
 
 
-## 機能候補
-MVPリリース
+## 機能
 - ユーザー（アプリ利用本人）登録機能
+- Googleログイン機能
 - 子供の複数登録機能（ユーザーは1人で記録対象を複数登録）
+- 画像アップロード機能（子のアイコンのため）
 - 「記録開始」〜「治った！」で1ブロックとする設計
 - 症状記録（登録）機能、一部の症状についてはカウント機能含む
 - サマリー表示機能（今日の病状サマリーと体調不良開始以降のサマリーに分ける）
-- 過去の体調不良一覧表示（期間と病名）
-- スマホ対応（スマホで使いやすい）
-
-本リリース
 - 嘔吐下痢の回数や熱などの推移表示（グラフ）
+- 過去の体調不良一覧表示（期間と病名）
 - 過去の体調不良に対する検索機能or絞り込み機能
-- 画像アップロード機能（症状把握のため）
-- デザインに組み込んだキャラクターが状況に合わせて労いメッセージを表示（「治った！」が押されたら盛大にお祝いするなど）
-- 好みや子供に合わせてデザイン（メインキャラと背景色）を変更できる
+- レスポンシブ対応（スマホで使いやすい）
 
 
 ## 使用する技術スタック
 フレームワーク
-- Ruby 3.2.0
-- Ruby on Rails 7.0.4
+- Ruby 3.1.4
+- Rails 7.2.2.2
 
 データベース
 - PostgreSQL
@@ -79,21 +75,24 @@ MVPリリース
 デプロイ先
 - Render
 
-Gem（MVPリリース向けのみ）
-- Devise：ユーザー認証のため
-- Bootsnap：パフォーマンス向上のため
+Gem
+- Devise
+- OmniAuth（Google OAuth2）
+- RSpec
+- GitHub Actions（CI）
+- RuboCop
+- JavaScript（Importmap）
+- Hotwire（Turbo / Stimulus）
+- AWS S3
+- image_processing
+- Resend
 
-フロントエンド（MVPリリース向けのみ）
-- Bootstrap 5：スマホ対応のため
 
-## 画面遷移図（MVPリリース用）
-https://www.figma.com/board/5wwNfpqsjBXZYG1B0Y1Hpr/Untitled?node-id=0-1&t=9kSnrP8kJwIECY6f-1
-
-## ER図（MVPリリース用）
+## ER図
 https://drive.google.com/file/d/12I7SnpjabVIjpppv_fF3yFsZoS5fOh0p/view?usp=sharing
 
 ## アプリURL
-https://medical-record-xqit.onrender.com/
+https://kodomo-karute.jp/
 
 ## Render
 https://dashboard.render.com/web/srv-d3njooadbo4c73d1thrg
