@@ -101,7 +101,7 @@ GEM
     bindex (0.8.1)
     bootsnap (1.18.6)
       msgpack (~> 1.2)
-    brakeman (7.1.0)
+    brakeman (7.1.1)
       racc
     builder (3.3.0)
     capybara (3.40.0)
@@ -128,10 +128,10 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    diff-lcs (1.6.2)
     drb (2.2.3)
     erb (4.0.4)
       cgi (>= 0.3.3)
-    error_highlight (0.7.0)
     erubi (1.13.1)
     faraday (2.14.0)
       faraday-net_http (>= 2.0, < 3.5)
@@ -323,6 +323,23 @@ GEM
       actionpack (>= 7.0)
       railties (>= 7.0)
     rexml (3.4.4)
+    rspec-core (3.13.6)
+      rspec-support (~> 3.13.0)
+    rspec-expectations (3.13.5)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.13.0)
+    rspec-mocks (3.13.7)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.13.0)
+    rspec-rails (8.0.2)
+      actionpack (>= 7.2)
+      activesupport (>= 7.2)
+      railties (>= 7.2)
+      rspec-core (~> 3.13)
+      rspec-expectations (~> 3.13)
+      rspec-mocks (~> 3.13)
+      rspec-support (~> 3.13)
+    rspec-support (3.13.6)
     rubocop (1.80.2)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
@@ -421,11 +438,10 @@ PLATFORMS
 DEPENDENCIES
   aws-sdk-s3 (~> 1.211.0)
   bootsnap
-  brakeman
+  brakeman (~> 7.1.1)
   capybara
   debug
   devise
-  error_highlight (>= 0.4.0)
   image_processing (~> 1.2)
   importmap-rails
   jbuilder
@@ -434,6 +450,7 @@ DEPENDENCIES
   puma (>= 5.0)
   rails (~> 7.2.2, >= 7.2.2.2)
   resend
+  rspec-rails
   rubocop
   rubocop-rails
   rubocop-rails-omakase
