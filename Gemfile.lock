@@ -438,7 +438,7 @@ PLATFORMS
 DEPENDENCIES
   aws-sdk-s3 (~> 1.211.0)
   bootsnap
-  brakeman
+  brakeman (~> 7.1.1)
   capybara
   debug
   devise
