@@ -3,6 +3,10 @@
 <main class="login-main">
   <%= render "shared/error_messages", object: resource %>
 
+  <% if flash[:alert] %>
+    <p class="alert"><%= flash[:alert] %></p>
+  <% end %>
+
   <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "login-form" }) do |f| %>
     
     <!-- メールアドレス -->

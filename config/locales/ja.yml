@@ -1,4 +1,29 @@
 ja:
+  errors:
+    messages:
+      invalid: "が正しくありません"
+    template:
+      header:
+        one: "1件のエラーがあります"
+        other: "%{count}件のエラーがあります"
+    not_saved:
+      one: "1件のエラーがあります"
+      other: "%{count}件のエラーがあります"
+
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            reset_password_token:
+              invalid: "パスワード再設定用のリンクが無効です。再度お試しください。"
+            password:
+              same_as_current: "入力されたパスワードは現在設定されているものと同じです。別のパスワードを入力してください。"
+
+  time:
+    formats:
+      short: "%Y/%m/%d %H:%M"
+
   date:
     formats:
-      long: "%Y年%-m月%-d日"
+      short: "%Y/%m/%d"
