@@ -36,6 +36,16 @@ gem "bootsnap", require: false
 
 gem "devise"
 
+gem "aws-sdk-s3", "~> 1.211.0", require: false
+
+gem "image_processing", "~> 1.2"
+
+gem "resend"
+
+gem "omniauth-google-oauth2"
+
+gem "devise-i18n"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
@@ -56,11 +66,6 @@ group :development do
   gem "rubocop", require: false
   gem "rubocop-rails", require: false
 end
-
-gem "aws-sdk-s3", "~> 1.211.0", require: false
-gem "image_processing", "~> 1.2"
-gem "resend"
-gem "omniauth-google-oauth2"
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
