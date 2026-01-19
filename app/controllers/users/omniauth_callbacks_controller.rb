@@ -1,7 +1,6 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def google_oauth2
     auth = request.env["omniauth.auth"]
-
     user = User.from_omniauth(auth)
 
     if user.persisted?
@@ -9,7 +8,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       set_flash_message(:notice, :success, kind: "Google") if is_navigational_format?
     else
       session["devise.google_data"] = auth.except("extra")
-      redirect_to new_user_registration_url, alert: "Googleログインに失敗しました。"
+      msg = user&.errors&.full_messages&.join(", ").presence || "Googleアカウントでの登録に失敗しました。"
+      redirect_to new_user_registration_url, alert: msg
     end
   end
 
