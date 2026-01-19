@@ -21,6 +21,11 @@ class User < ApplicationRecord
     uid = auth.uid
     email = auth.info.email
 
+    name =
+      auth.info.name.presence ||
+      auth.info.nickname.presence ||
+      (email.present? ? email.split("@").first : "ユーザー")
+
     user = find_by(provider: provider, uid: uid)
     return user if user
 
@@ -30,8 +35,9 @@ class User < ApplicationRecord
       return user
     end
 
-    create!(
+    create(
       email: email,
+      name: name,
       password: Devise.friendly_token.first(20),
       provider: provider,
       uid: uid
