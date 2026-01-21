@@ -64,6 +64,8 @@
     <% end %>
   </header>
 
+  <%= turbo_frame_tag "modal" %>
+
   <%= yield %>
 
   <footer class="site-footer">
@@ -71,6 +73,6 @@
     <span>｜</span>
     <%= link_to "プライバシーポリシー", privacy_path %>
   </footer>
-  
+
   </body>
 </html>

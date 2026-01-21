@@ -1,0 +1,36 @@
+<%= form_with model: kid,
+              data: { controller: "icon-upload", action: "submit->icon-upload#onSubmit" },
+              html: { multipart: true, class: "login-form" } do |f| %>
+
+  <%= render "shared/error_messages", object: kid %>
+
+  <div class="form-group">
+    <%= f.label :name, "お子さまの名前" %>
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :birthday, "生年月日" %>
+    <%= f.date_field :birthday, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :icon, "お子さまのアイコン" %>
+    <%= f.file_field :icon,
+          accept: "image/*",
+          direct_upload: true,
+          class: "form-control",
+          data: { "icon-upload-target": "input", action: "change->icon-upload#prepare" } %>
+
+    <div data-icon-upload-target="status" hidden>
+      <span class="spinner"></span>
+      <span data-icon-upload-target="progress">0</span>%
+    </div>
+
+    <p data-icon-upload-target="error" class="error" hidden></p>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit "保存", class: "login-button" %>
+  </div>
+<% end %>

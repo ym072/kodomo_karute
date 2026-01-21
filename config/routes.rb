@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     omniauth_callbacks: "users/omniauth_callbacks"
   }
 
-  resources :kids, only: [ :index, :new, :create, :show ] do
+  resources :kids, only: [ :index, :new, :create, :show, :edit, :update, :destroy ] do
     member do
       get :select
     end

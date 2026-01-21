@@ -1,0 +1,22 @@
+<turbo-frame id="modal">
+  <dialog data-controller="modal">
+    <div class="modal-inner modal-inner--form">
+      <h2 class="modal-title">お子さま情報を編集</h2>
+
+      <%= render "shared/error_messages", object: @kid %>
+      <%= render "form", kid: @kid %>
+
+      <div class="modal-actions">
+        <%= button_to "お子さまの情報を削除",
+                      kid_path(@kid),
+                      method: :delete,
+                      form: { data: { turbo_confirm: "本当に削除しますか？これまでの記録もすべて削除されます。" } },
+                      class: "login-button" %>
+
+        <form method="dialog">
+          <button class="record-button" type="submit">閉じる</button>
+        </form>
+      </div>
+    </div>
+  </dialog>
+</turbo-frame>
