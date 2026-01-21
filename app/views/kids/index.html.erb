@@ -8,8 +8,7 @@
       <li class="kid-item">
         <%= link_to select_kid_path(kid), class: "kid-link" do %>
           <% if kid.icon.attached? %>
-            <%= image_tag kid.icon.variant(resize_to_fill: [72, 72]).processed,
-                          class: "kid-icon" %>
+            <%= image_tag url_for(kid.icon), class: "kid-icon", width: 72, height: 72, loading: "lazy" %>
           <% else %>
             <span class="kid-icon">👤</span>
           <% end %>
