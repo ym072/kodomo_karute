@@ -6,22 +6,29 @@
   <ul>
     <% @kids.each do |kid| %>
       <li class="kid-item">
-        <%= link_to select_kid_path(kid), class: "kid-link" do %>
-          <% if kid.icon.attached? %>
-            <%= image_tag url_for(kid.icon), class: "kid-icon", width: 72, height: 72, loading: "lazy" %>
-          <% else %>
-            <span class="kid-icon">👤</span>
-          <% end %>
+        <%= turbo_frame_tag dom_id(kid) do %>
+          <div class="kid-row">
+            <%= link_to select_kid_path(kid), class: "kid-link" do %>
+              <% if kid.icon.attached? %>
+                <%= image_tag url_for(kid.icon), class: "kid-icon", width: 72, height: 72, loading: "lazy" %>
+              <% else %>
+                <span class="kid-icon">👤</span>
+              <% end %>
 
-          <span class="kid-name"><%= kid.name %></span>
+              <span class="kid-name"><%= kid.name %></span>
+            <% end %>
+
+            <%= link_to "編集",
+                        edit_kid_path(kid),
+                        data: { turbo_frame: "modal" },
+                        class: "kid-edit-link" %>
+          </div>
         <% end %>
       </li>
     <% end %>
   </ul>
 
   <div class="form-actions">
-    <%= link_to "お子さまを追加する",
-                new_kid_path,
-                class: "login-button" %>
+    <%= link_to "お子さまを追加する", new_kid_path, class: "login-button" %>
   </div>
 </main>

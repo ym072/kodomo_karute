@@ -1,5 +1,6 @@
 class KidsController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_kid, only: %i[select edit update destroy]
 
   def new
     @kid = Kid.new
@@ -35,7 +36,36 @@ class KidsController < ApplicationController
     @disease_records = @kid.disease_records.order(start_at: :desc)
   end
 
+  def edit
+  end
+
+  def update
+    if @kid.update(kid_params)
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to kids_path, notice: "更新しました。" }
+      end
+    else
+      respond_to do |format|
+        format.turbo_stream { render :edit, status: :unprocessable_entity }
+        format.html { render :edit, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def destroy
+    @kid.destroy!
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to kids_path, notice: "削除しました。" }
+    end
+  end
+
   private
+
+  def set_kid
+    @kid = current_user.kids.find(params[:id])
+  end
 
   def kid_params
     params.require(:kid).permit(:name, :birthday, :icon)
