@@ -4,8 +4,9 @@
   <%= render "shared/error_messages", object: @kid %>
 
   <%= form_for(@kid,
-               url: kids_path,
-               html: { class: "login-form", multipart: true }) do |f| %>
+              url: kids_path,
+              html: { class: "login-form", multipart: true },
+              data: { controller: "icon-upload", action: "submit->icon-upload#onSubmit" })do |f| %> 
 
     <!-- 子どもの名前 -->
     <div class="form-group">
@@ -22,9 +23,20 @@
     <!-- アイコン -->
     <div class="form-group">
       <%= f.label :icon, "お子さまのアイコン" %>
+
       <%= f.file_field :icon,
-                        accept: "image/*",
-                        class: "form-control" %>
+        accept: "image/*",
+        direct_upload: true,
+        class: "form-control",
+        data: { action: "change->icon-upload#prepare",
+          icon_upload_target: "input" } %>
+
+      <div data-icon-upload-target="status" hidden class="upload-status">
+        <div class="spinner"></div>
+        <div>アップロード中… <span data-icon-upload-target="progress">0</span>%</div>
+      </div>
+
+      <div data-icon-upload-target="error" hidden class="upload-error"></div>
     </div>
 
     <div class="form-actions">

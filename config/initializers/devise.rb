@@ -273,13 +273,18 @@ Devise.setup do |config|
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
   if Rails.env.production? || Rails.env.development?
-    config.omniauth :google_oauth2,
-                  ENV.fetch("GOOGLE_CLIENT_ID"),
-                  ENV.fetch("GOOGLE_CLIENT_SECRET"),
-                  {
-                    prompt: "select_account",
-                    scope: "email,profile"
-                  }
+    google_client_id     = ENV["GOOGLE_CLIENT_ID"]
+    google_client_secret = ENV["GOOGLE_CLIENT_SECRET"]
+  
+    if google_client_id.present? && google_client_secret.present?
+      config.omniauth :google_oauth2,
+                      google_client_id,
+                      google_client_secret,
+                      {
+                        prompt: "select_account",
+                        scope: "email,profile"
+                      }
+    end
   end
 
   # ==> Warden configuration
