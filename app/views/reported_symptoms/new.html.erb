@@ -5,10 +5,19 @@
     <div id="start-popup" class="popup">
       <div class="popup-content">
         <p>体調記録をスタートしますか？</p>
+        <p class="popup-message">
+          お子さまの様子を、少しずつ残していきましょう。<br>
+          きっとあとで、あなたの助けになります。<br>
+          今日もお疲れさま。
+        </p>
+
         <%= button_to "スタート",
               start_record_kid_reported_symptoms_path(@kid),
               method: :post,
               class: "start-button" %>
+        <p class="popup-message">
+          ※ 記録しない場合は、上部メニューから他の画面へ移動できます。
+        </p>
       </div>
     </div>
 

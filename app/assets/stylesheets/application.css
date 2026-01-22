@@ -34,7 +34,7 @@ body {
     align-items: center;
     justify-content: space-between;
     position: relative;
-    z-index: 100;
+    z-index: 2000;
     gap: 12px;
     margin-bottom: 40px;
     min-height: 72px;
@@ -87,7 +87,7 @@ body {
     border-radius: 12px;
     box-shadow: 0 10px 24px rgba(0,0,0,0.12);
     padding: 8px;
-    z-index: 200;
+    z-index: 2000;
     margin: 0;
 }
 
@@ -335,6 +335,13 @@ body {
     border-radius: 10px;
     text-align: center;
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    font-size: 20px;
+}
+
+.popup-message {
+    margin-bottom: 20px;
+    margin-top: 20px;
+    font-size: 14px;
 }
 
 .summary-header {
