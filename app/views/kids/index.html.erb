@@ -8,7 +8,7 @@
       <li class="kid-item">
         <%= turbo_frame_tag dom_id(kid) do %>
           <div class="kid-row">
-            <%= link_to select_kid_path(kid), class: "kid-link" do %>
+            <%= link_to select_kid_path(kid), class: "kid-link",data: { turbo_frame: "_top" } do %>
               <% if kid.icon.attached? %>
                 <%= image_tag url_for(kid.icon), class: "kid-icon", width: 72, height: 72, loading: "lazy" %>
               <% else %>
