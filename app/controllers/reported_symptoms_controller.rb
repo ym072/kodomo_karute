@@ -107,6 +107,12 @@ class ReportedSymptomsController < ApplicationController
           .select(:symptom_name_id)
           .distinct
           .includes(:symptom_name)
+      
+      @today_memos =
+        @today_symptoms
+          .where.not(memo: [nil, ""])
+          .order(recorded_at: :asc)
+        
     end
 
     if @tab == "all"
@@ -117,7 +123,8 @@ class ReportedSymptomsController < ApplicationController
         rash: "発疹",
         vomit: "嘔吐",
         stool: "便",
-        temperature: "体温"
+        temperature: "体温",
+        memo: "メモ"
       }
 
       this_week_start = Time.zone.today.beginning_of_week(:monday)
@@ -137,6 +144,18 @@ class ReportedSymptomsController < ApplicationController
       records =
         @reported_symptoms.where(recorded_at: range_start..range_end)
 
+        memo_records = records.where.not(memo: [nil, ""]).order(:recorded_at)
+
+        @memos_for_calendar = {}
+        memo_records.each do |m|
+          date = m.recorded_at.in_time_zone.to_date
+          (@memos_for_calendar[date] ||= []) << {
+            at:   m.recorded_at.in_time_zone.strftime("%-m/%-d %H:%M"),
+            text: m.memo
+          }
+        end
+
+        
       @matrix = {}
 
       @weeks.values.flatten.each do |date|
@@ -147,7 +166,7 @@ class ReportedSymptomsController < ApplicationController
       end
 
       records.each do |rs|
-        date = rs.recorded_at.to_date
+        date = rs.recorded_at.in_time_zone.to_date
 
         if rs.symptom_name
           slot_key =
@@ -157,7 +176,11 @@ class ReportedSymptomsController < ApplicationController
 
         if rs.body_temperature.present?
           @matrix[date][:temperature] = true
-        end
+        end     
+      end
+
+      @weeks.values.flatten.each do |date|
+        @matrix[date][:memo] = @memos_for_calendar[date].present?
       end
 
       today = Time.zone.today
@@ -174,8 +197,19 @@ class ReportedSymptomsController < ApplicationController
       @daily_symptoms = dates.index_with do |date|
         @symptom_slots.filter_map do |key, label|
           next unless @matrix.dig(date, key)
-          { key: key, label: label }
-         end
+      
+          if key == :memo
+            memos = (@memos_for_calendar[date] || []).map do |m|
+              {
+                at: "#{date.strftime("%-m/%-d")} #{m[:time]}",
+                text: m[:text]
+              }
+            end
+            { key: key, label: label, memos: memos }
+          else
+            { key: key, label: label }
+          end
+        end
       end
 
       @end_date = Time.zone.today

@@ -2,6 +2,8 @@
 import "@hotwired/turbo-rails"
 import "controllers"
 import { start } from "@rails/activestorage"
+import "memo_popup"
+import "chart_boot"
 start()
 
 document.addEventListener("turbo:load", () => {

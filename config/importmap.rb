@@ -15,3 +15,6 @@ pin "heic-to", to: "https://cdn.jsdelivr.net/npm/heic-to@1.3.0/dist/heic-to.js"
 
 pin_all_from "app/javascript/controllers", under: "controllers"
 pin_all_from "app/javascript/charts", under: "charts"
+
+pin "memo_popup", to: "memo_popup.js"
+pin "chart_boot", to: "chart_boot.js"
