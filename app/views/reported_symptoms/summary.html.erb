@@ -54,6 +54,18 @@
             </li>
           <% end %>
         </ul>
+        <% if @today_memos.present? %>
+          <div class="today-memo">
+            <p class="today-memo-title">メモ</p>
+
+            <% @today_memos.each do |m| %>
+              <p class="today-memo-item">
+                <span class="today-memo-time"><%= l m.recorded_at, format: :short %></span><br>
+                <%= simple_format(h(m.memo), { class: "today-memo-text" }, wrapper_tag: "div") %>
+              </p>
+            <% end %>
+          </div>
+        <% end %>
       <% end %>
 
       <% if @tab == "all" %>
@@ -101,7 +113,16 @@
                   <div class="day-tags">
                     <% if items.any? %>
                       <% items.each do |t| %>
-                        <span class="tag <%= t[:key] %>"><%= t[:label] %></span>
+                        <% if t[:key] == :memo %>
+                          <% memos = @memos_for_calendar[date] || [] %>
+                          <button type="button"
+                                  class="tag memo memo-tag"
+                                  data-memos="<%= json_escape(memos.to_json) %>">
+                            メモ
+                          </button>
+                        <% else %>
+                          <span class="tag <%= t[:key] %>"><%= t[:label] %></span>
+                        <% end %>
                       <% end %>
                     <% else %>
                       <span class="muted">症状なし</span>
@@ -113,20 +134,21 @@
           <% end %>
         </section>
 
+        <div id="memo-popup" class="popup is-hidden">
+          <div class="popup-content">
+            <p class="memo-popup-title">メモ</p>
+            <div id="memo-popup-body"></div>
+
+            <button type="button" class="start-button" id="memo-popup-close">
+              閉じる
+            </button>
+          </div>
+        </div>
+
         <div class="symptom-trend">
           <h3 class="section-title">体温/嘔吐/便の推移</h3>
 
-          <canvas id="symptomTrendChart" data-chart="<%= j @chart_data.to_json %>"></canvas>
-
-          <script type="module">
-            import { renderSymptomTrendChart } from "charts/symptom_trend_chart";
-
-            document.addEventListener("DOMContentLoaded", () => {
-              const canvas = document.getElementById("symptomTrendChart");
-              const data = <%= raw @chart_data.to_json %>;
-              renderSymptomTrendChart(canvas, data);
-            });
-          </script>
+          <canvas id="symptomTrendChart" data-chart="<%= json_escape(@chart_data.to_json) %>"></canvas>
         </div>
       <% end %>
     </div>

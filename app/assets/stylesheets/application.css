@@ -1323,3 +1323,77 @@ turbo-frame#modal dialog,
 turbo-frame#modal .modal-inner {
   color: #da6220;
 }
+
+.popup.is-hidden {
+  display: none;
+}
+
+.tag.memo {
+  border: none;
+  cursor: pointer;
+}
+
+.today-memo {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid #eee;
+}
+
+.today-memo-title {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.today-memo-item {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.today-memo-time {
+  font-size: 0.85rem;
+  color: #888;
+}
+
+.today-memo-text {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.memo-popup-item {
+  text-align: left;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.memo-popup-item:last-child {
+  border-bottom: none;
+}
+
+.memo-popup-at {
+  font-size: 0.85rem;
+  color: #888;
+  margin-bottom: 6px;
+}
+
+.memo-popup-text {
+  font-size: 0.95rem;
+  color: #555;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  line-height: 1.6;
+}
+
+#memo-popup-body {
+  margin: 12px 0;
+  max-height: 45vh;
+  overflow-y: auto;
+  width: 100%;
+}
+
+#memo-popup-body, .memo-popup-text, .memo-popup-at {
+  color: #555;
+}
+
