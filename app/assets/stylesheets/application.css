@@ -792,7 +792,7 @@ body {
 }
 
 .search-button {
-    display: inline-flex;
+  display: inline-flex;
   padding: 6px 18px;
   background-color: #ede8d1;
   color: #da6220;
@@ -1397,3 +1397,65 @@ turbo-frame#modal .modal-inner {
   color: #555;
 }
 
+.day-more{
+  text-decoration: none;
+  font-weight: bold;
+  padding: 2px 8px;
+  color: #da6220;
+}
+
+.today-edit-wrap {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid #eee;
+  text-align: center;
+}
+
+.today-edit-tag {
+  display: inline-flex;
+  padding: 4px 12px;
+  background-color: #ede8d1;
+  color: #da6220;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  align-items: center;
+  text-decoration: none;
+}
+
+.daily-edit-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 10px 0 16px;
+  border-top: 1px solid #f2edd7;
+}
+
+.disease-name-status {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.disease-name-label {
+  color: #777;
+  font-size: 0.9rem;
+}
+
+.disease-name-value {
+  font-weight: 700;
+}
+
+.disease-name-empty {
+  color: #da6220;
+}
+
+.daily-edit-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 10px 0 16px;
+  border-top: 1px solid #f2edd7;
+}

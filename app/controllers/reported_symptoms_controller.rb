@@ -1,6 +1,7 @@
 class ReportedSymptomsController < ApplicationController
   before_action :set_kid
-  before_action :set_disease_record, only: [ :new, :create ]
+  before_action :set_disease_record, only: [ :new, :summary, :daily_edit ]
+  before_action :set_reported_symptom, only: [ :edit, :update, :destroy ]
 
   def new
     if @disease_record.present?
@@ -24,31 +25,39 @@ class ReportedSymptomsController < ApplicationController
   end
 
   def create
-    unless @disease_record
+    commit_type = params[:commit_type]
+  
+    disease_record = @kid.disease_records.find_by(end_at: nil)
+  
+    unless disease_record
       redirect_to new_kid_reported_symptom_path(@kid), alert: "記録をスタートしてください。"
       return
     end
-
-    commit_type = params[:commit_type]
-
-    case commit_type
-    when "disease_name"
-      @disease_record.update!(
-        name: params[:reported_symptom][:disease_name]
-      )
-      redirect_to new_kid_reported_symptom_path(@kid), notice: "病名を記録しました"
+  
+    if commit_type == "disease_name"
+      disease_name = params.dig(:reported_symptom, :disease_name)
+  
+      if disease_name.blank?
+        redirect_to new_kid_reported_symptom_path(@kid), alert: "病名を入力してください"
+        return
+      end
+  
+      disease_record.update!(name: disease_name)
+  
+      redirect_to new_kid_reported_symptom_path(@kid),
+                  notice: "病名を記録しました"
       return
     end
 
-    @reported_symptom = @disease_record.reported_symptoms.new(reported_symptom_params)
-    @reported_symptom.recorded_at = Time.current
-
-    if @reported_symptom.save
+    reported_symptom = disease_record.reported_symptoms.new(reported_symptom_params)
+    reported_symptom.recorded_at = Time.current
+  
+    if reported_symptom.save
       redirect_to new_kid_reported_symptom_path(@kid), notice: "症状を記録しました"
     else
       render :new, status: :unprocessable_entity
     end
-  end
+  end  
 
   def summary
     @kid = Kid.find(params[:kid_id])
@@ -251,6 +260,50 @@ class ReportedSymptomsController < ApplicationController
     end
   end
 
+  def daily_edit
+    if @disease_record.nil?
+      redirect_to kid_path(@kid), alert: "記録中の病気がありません。"
+      return
+    end
+  
+    @date = Date.parse(params[:date])  # 例: "2026-01-22"
+    @reported_symptoms =
+      @disease_record.reported_symptoms
+        .includes(:symptom_name)
+        .where(recorded_at: @date.all_day)
+        .order(:recorded_at)
+  
+    @symptom_names = SymptomName.order(:id)
+  end
+
+  def edit
+    @symptom_names = SymptomName.order(:id)
+  end
+  
+  def update
+    if @reported_symptom.update(reported_symptom_params)
+      redirect_to daily_edit_kid_reported_symptoms_path(@kid, date: @reported_symptom.recorded_at.to_date),
+                  notice: "記録を更新しました"
+    else
+      @symptom_names = SymptomName.order(:id)
+      render :edit, status: :unprocessable_entity
+    end
+  end
+  
+  def destroy
+    date = @reported_symptom.recorded_at.to_date
+    @reported_symptom.destroy
+    redirect_to daily_edit_kid_reported_symptoms_path(@kid, date: date), notice: "記録を削除しました"
+  end
+
+  def set_reported_symptom
+    @reported_symptom =
+      ReportedSymptom
+        .joins(:disease_record)
+        .where(disease_records: { kid_id: @kid.id, end_at: nil })
+        .find(params[:id])
+  end
+  
   private
 
   def set_kid

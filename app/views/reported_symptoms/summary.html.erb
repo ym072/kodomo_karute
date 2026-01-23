@@ -20,6 +20,15 @@
       <% if @tab == "today" %>
         <h3><%= Date.today %>（発症 <%= @day_count %> 日目）</h3>
 
+        <div class="disease-name-status">
+          <% if @disease_record.name.present? %>
+            <span class="disease-name-label"></span>
+            <span class="disease-name-value"><%= @disease_record.name %></span>
+          <% else %>
+            <span class="disease-name-empty">病名は未登録です</span>
+          <% end %>
+        </div>
+
         <% if @latest_temperature %>
           <p>
             最新体温：
@@ -66,6 +75,11 @@
             <% end %>
           </div>
         <% end %>
+        <div class="today-edit-wrap">
+          <%= link_to "今日の記録を修正する",
+            daily_edit_kid_reported_symptoms_path(@kid, date: Date.today),
+            class: "login-botton" %>
+        </div>
       <% end %>
 
       <% if @tab == "all" %>
@@ -128,6 +142,9 @@
                       <span class="muted">症状なし</span>
                     <% end %>
                   </div>
+                  <%= link_to "…",
+                    daily_edit_kid_reported_symptoms_path(@kid, date: date),
+                    class: "day-more" %>
                 </div>
               <% end %>
             </div>

@@ -12,19 +12,18 @@ Rails.application.routes.draw do
       get :select
     end
 
-    resources :disease_records, only: [ :create ] do
+    resources :disease_records, only: [:index, :create, :edit, :update ] do
       member do
         get :end_form
         patch :end_update
       end
     end
 
-    resources :disease_records, only: [ :index ]
-
-    resources :reported_symptoms, only: [ :new, :create ] do
+    resources :reported_symptoms, only: [ :new, :create, :edit, :update, :destroy] do
       collection do
         post :start_record
         get :summary
+        get :daily_edit
       end
     end
   end
