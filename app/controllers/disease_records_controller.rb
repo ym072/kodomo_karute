@@ -1,6 +1,17 @@
 class DiseaseRecordsController < ApplicationController
   before_action :set_kid
-  before_action :set_disease_record, only: [ :end_form, :end_update ]
+  before_action :set_disease_record, only: [ :end_form, :end_update, :edit, :update ]
+
+  def edit
+  end
+  
+  def update
+    if @disease_record.update(disease_record_params)
+      redirect_to summary_kid_reported_symptoms_path(@kid, tab: "all"), notice: "病名を更新しました"
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
 
   def create
     @disease_record = @kid.disease_records.build(disease_record_params)

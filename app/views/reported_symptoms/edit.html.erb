@@ -1,0 +1,39 @@
+<main class="login-main">
+  <h2>記録を編集</h2>
+
+  <p class="muted">
+    記録日時：<%= l @reported_symptom.recorded_at, format: :short %>
+  </p>
+
+  <%= form_with model: [@kid, @reported_symptom], local: true do |f| %>
+    <% if @reported_symptom.errors.any? %>
+      <div class="alert">
+        <%= @reported_symptom.errors.full_messages.join("、") %>
+      </div>
+    <% end %>
+
+    <div class="form-row">
+      <%= f.collection_select :symptom_name_id, @symptom_names, :id, :name,
+            { include_blank: "症状なし（体温/メモのみ）" },
+            class: "form-control" %>
+    </div>
+
+    <div class="form-row">
+      <%= f.number_field :body_temperature, step: 0.1, placeholder: "体温", class: "form-control" %>
+    </div>
+
+    <div class="form-row">
+      <%= f.text_area :memo, rows: 3, placeholder: "メモ", class: "form-control" %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "更新", class: "login-button" %>
+    </div>
+  <% end %>
+
+  <div class="actions" style="margin-top: 10px;">
+    <%= link_to "戻る",
+      daily_edit_kid_reported_symptoms_path(@kid, date: @reported_symptom.recorded_at.to_date),
+      class: "login-button" %>
+  </div>
+</main>

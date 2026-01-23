@@ -1,0 +1,17 @@
+<main class="login-main">
+  <h2>病名を編集</h2>
+
+  <%= form_with model: [@kid, @disease_record], local: true do |f| %>
+    <div class="form-row">
+      <%= f.text_field :name, placeholder: "病名（例: 風邪、インフルエンザなど）", class: "form-control" %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "更新", class: "login-button" %>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= link_to "戻る", summary_kid_reported_symptoms_path(@kid, tab: "all"), class: "login-button" %>
+  </div>
+</main>

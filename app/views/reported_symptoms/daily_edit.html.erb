@@ -1,0 +1,53 @@
+<main class="login-main">
+  <h2><%= @date.strftime("%-m/%-d") %> の記録を編集</h2>
+
+  <div class="daily-edit-header">
+    <div class="disease-name-status">
+      <% if @disease_record.name.present? %>
+        <span class="disease-name-label"></span>
+        <span class="disease-name-value"><%= @disease_record.name %></span>
+      <% else %>
+        <span class="disease-name-empty">病名は未登録です</span>
+      <% end %>
+    </div>
+
+    <div class="daily-edit-actions">
+      <%= link_to "病名を編集",
+        edit_kid_disease_record_path(@kid, @disease_record),
+        class: "today-edit-tag" %>
+    </div>
+  </div>
+
+  <% if @reported_symptoms.any? %>
+    <% @reported_symptoms.each do |rs| %>
+      <div class="day-item" style="align-items: center;">
+        <div style="flex: 1;">
+          <div class="muted"><%= l rs.recorded_at, format: :short %></div>
+
+          <% if rs.symptom_name.present? %>
+            <div>症状：<%= rs.symptom_name.name %></div>
+          <% end %>
+
+          <% if rs.body_temperature.present? %>
+            <div>体温：<%= rs.body_temperature %>℃</div>
+          <% end %>
+
+          <% if rs.memo.present? %>
+            <div>メモ：<%= simple_format(h(rs.memo)) %></div>
+          <% end %>
+        </div>
+
+        <div style="display:flex; gap:8px;">
+          <%= link_to "編集", edit_kid_reported_symptom_path(@kid, rs), class: "today-edit-tag" %>
+          <%= button_to "削除",
+                kid_reported_symptom_path(@kid, rs),
+                method: :delete,
+                data: { turbo_confirm: "この記録を削除しますか？" },
+                class: "today-edit-tag" %>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <p class="muted">この日の記録はありません</p>
+  <% end %>
+</main>
