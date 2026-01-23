@@ -1470,3 +1470,19 @@ turbo-frame#modal .modal-inner {
 .daily-edit-memo-body p {
   margin: 0;
 }
+
+.symptom-button:hover,
+.record-button:hover,
+.heal-button:hover,
+.start-button:hover {
+  filter: brightness(0.97);
+  cursor: pointer;
+}
+
+.symptom-button:active,
+.record-button:active,
+.heal-button:active,
+.start-button:active {
+  transform: translateY(1px);
+  filter: brightness(0.94);
+}
