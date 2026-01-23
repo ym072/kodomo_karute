@@ -24,7 +24,9 @@
   <% end %>
 
   <div id="reported_symptom_form">
-    <%= render "form", kid: @kid, reported_symptom: @reported_symptom %>
+    <% if @disease_record.present? %>
+      <%= render "form", kid: @kid, reported_symptom: @reported_symptom %>
+    <% end %>
   </div>
 
   <% if @disease_record %>

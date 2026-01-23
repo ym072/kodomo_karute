@@ -78,13 +78,11 @@ class ReportedSymptomsController < ApplicationController
     @disease_record = @kid.disease_records.where(end_at: nil)
                                           .order(start_at: :desc)
                                           .first
+    @tab = params[:tab] || "today"
 
     if @disease_record.nil?
-      redirect_to kid_path(@kid), alert: "記録中の病気がありません。"
       return
     end
-
-    @tab = params[:tab] || "today"
 
     @reported_symptoms = @disease_record.reported_symptoms
                                         .includes(:symptom_name)

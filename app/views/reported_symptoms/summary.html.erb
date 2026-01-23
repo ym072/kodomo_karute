@@ -1,4 +1,4 @@
-<% content_for :title, "medical record - 症状記録" %>
+<% content_for :title, "kodomo-karute - 症状記録" %>
 
 <main class="login-main">
   <div class="summary-header">
@@ -17,6 +17,9 @@
     </div>
 
     <div class="tab-content">
+      <% if @disease_record.nil? %>
+        <p class="muted">現在記録中の体調不良はありません。</p>
+      <% else %>
       <% if @tab == "today" %>
         <h3><%= Date.today %>（発症 <%= @day_count %> 日目）</h3>
 
@@ -167,6 +170,7 @@
 
           <canvas id="symptomTrendChart" data-chart="<%= json_escape(@chart_data.to_json) %>"></canvas>
         </div>
+      <% end %>
       <% end %>
     </div>
   </div>
