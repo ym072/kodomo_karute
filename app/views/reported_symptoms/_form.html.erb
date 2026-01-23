@@ -1,0 +1,49 @@
+<%= form_with model: [kid, reported_symptom], local: true do |f| %>
+
+    <div class="symptom-buttons">
+      <% ["頭痛","咳","鼻水","発疹","嘔吐","便"].each do |name| %>
+        <% symptom = SymptomName.find_by(name: name) %>
+        <%= button_tag name,
+              type: "submit",
+              name: "reported_symptom[symptom_name_id]",
+              value: symptom.id,
+              class: "symptom-button" %>
+      <% end %>
+    </div>
+
+    <div class="form-row">
+      <%= f.number_field :body_temperature,
+            placeholder: "体温",
+            step: 0.1,
+            class: "form-control" %>
+      <%= button_tag "記録",
+            type: "submit",
+            name: "commit_type",
+            value: "temperature",
+            class: "record-button" %>
+    </div>
+
+    <div class="form-row">
+      <%= f.text_area :memo,
+            placeholder: "メモ",
+            rows: 2,
+            class: "form-control" %>
+      <%= button_tag "記録",
+            type: "submit",
+            name: "commit_type",
+            value: "memo",
+            class: "record-button" %>
+    </div>
+
+    <div class="form-row">
+      <%= f.text_field :disease_name,
+            name: "reported_symptom[disease_name]",
+            placeholder: "病名（例: 風邪、インフルエンザなど）",
+            class: "form-control" %>
+      <%= button_tag "記録",
+            type: "submit",
+            name: "commit_type",
+            value: "disease_name",
+            class: "record-button" %>
+    </div>
+  <% end %>

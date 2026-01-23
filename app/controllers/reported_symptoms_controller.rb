@@ -26,14 +26,13 @@ class ReportedSymptomsController < ApplicationController
 
   def create
     commit_type = params[:commit_type]
-  
     disease_record = @kid.disease_records.find_by(end_at: nil)
   
     unless disease_record
       redirect_to new_kid_reported_symptom_path(@kid), alert: "記録をスタートしてください。"
       return
     end
-  
+
     if commit_type == "disease_name"
       disease_name = params.dig(:reported_symptom, :disease_name)
   
@@ -45,19 +44,34 @@ class ReportedSymptomsController < ApplicationController
       disease_record.update!(name: disease_name)
   
       redirect_to new_kid_reported_symptom_path(@kid),
-                  notice: "病名を記録しました"
+                  notice: "病名（#{disease_record.name}）を記録しました"
       return
     end
-
+  
     reported_symptom = disease_record.reported_symptoms.new(reported_symptom_params)
     reported_symptom.recorded_at = Time.current
-  
+
     if reported_symptom.save
-      redirect_to new_kid_reported_symptom_path(@kid), notice: "症状を記録しました"
+      msg =
+        case commit_type
+        when "memo"
+          "メモを記録しました"
+        when "temperature"
+          if reported_symptom.body_temperature.present?
+            "#{reported_symptom.body_temperature}℃ を記録しました"
+          else
+            "体温を記録しました"
+          end
+        else
+          symptom = reported_symptom.symptom_name&.name
+          symptom.present? ? "#{symptom} を記録しました" : "症状を記録しました"
+        end
+
+      redirect_to new_kid_reported_symptom_path(@kid), notice: msg
     else
       render :new, status: :unprocessable_entity
     end
-  end  
+  end     
 
   def summary
     @kid = Kid.find(params[:kid_id])
