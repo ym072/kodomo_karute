@@ -33,7 +33,10 @@
           <% end %>
 
           <% if rs.memo.present? %>
-            <div>メモ：<%= simple_format(h(rs.memo)) %></div>
+            <div class="daily-edit-memo">
+              <div class="daily-edit-memo-label">メモ：</div>
+              <div class="daily-edit-memo-body"><%= simple_format(h(rs.memo)) %></div>
+            </div>
           <% end %>
         </div>
 
