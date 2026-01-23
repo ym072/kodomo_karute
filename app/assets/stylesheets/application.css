@@ -1459,3 +1459,14 @@ turbo-frame#modal .modal-inner {
   margin: 10px 0 16px;
   border-top: 1px solid #f2edd7;
 }
+
+.daily-edit-memo-body {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  line-height: 1.6;
+}
+
+.daily-edit-memo-body p {
+  margin: 0;
+}
