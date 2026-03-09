@@ -55,20 +55,20 @@
 ### 症状記録
 - 「記録開始」〜「治った！」を1レコードとして体調不良ごとに管理できる設計
 - 症状記録（登録）機能、一部の症状についてはカウント機能含む
-[![Image from Gyazo](https://i.gyazo.com/bcde1d4ad37eee4087ba042ce6d1b794.png)](https://gyazo.com/bcde1d4ad37eee4087ba042ce6d1b794)
+<img src="[![Image from Gyazo](https://i.gyazo.com/bcde1d4ad37eee4087ba042ce6d1b794.png)](https://gyazo.com/bcde1d4ad37eee4087ba042ce6d1b794)" width="500">
 
 ### サマリー表示
 - 当日の症状サマリー
-[![Image from Gyazo](https://i.gyazo.com/047b24144277401eba580d4ad8456c8e.png)](https://gyazo.com/047b24144277401eba580d4ad8456c8e)
+<img src="[![Image from Gyazo](https://i.gyazo.com/047b24144277401eba580d4ad8456c8e.png)](https://gyazo.com/047b24144277401eba580d4ad8456c8e)" width="500">
 
 - 開始以降全期間のサマリー
-[![Image from Gyazo](https://i.gyazo.com/55424eb4bff0f528013bf40a30074ff6.png)](https://gyazo.com/55424eb4bff0f528013bf40a30074ff6)
-[![Image from Gyazo](https://i.gyazo.com/444e778d6a853ebd648da3bec975e94b.png)](https://gyazo.com/444e778d6a853ebd648da3bec975e94b)
+<img src="[![Image from Gyazo](https://i.gyazo.com/55424eb4bff0f528013bf40a30074ff6.png)](https://gyazo.com/55424eb4bff0f528013bf40a30074ff6)" width="500">
+<img src="[![Image from Gyazo](https://i.gyazo.com/444e778d6a853ebd648da3bec975e94b.png)](https://gyazo.com/444e778d6a853ebd648da3bec975e94b)" width="500">
 
 ### 過去の体調不良一覧
 - 過去の体調不良一覧表示
 - 過去の体調不良に対する検索機能
-[![Image from Gyazo](https://i.gyazo.com/2e19d1614cff183cfc3620e0533fceab.png)](https://gyazo.com/2e19d1614cff183cfc3620e0533fceab)
+<img src="[![Image from Gyazo](https://i.gyazo.com/2e19d1614cff183cfc3620e0533fceab.png)](https://gyazo.com/2e19d1614cff183cfc3620e0533fceab)" width="500">
 
 ### その他
 - レスポンシブ対応
