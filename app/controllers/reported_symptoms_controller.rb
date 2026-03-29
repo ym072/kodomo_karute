@@ -75,9 +75,10 @@ class ReportedSymptomsController < ApplicationController
 
   def summary
     @kid = Kid.find(params[:kid_id])
-    @disease_record = @kid.disease_records.where(end_at: nil)
+    @disease_record = @kid.disease_records.where(end_at: nil)  # 現在進行中の体調不良
                                           .order(start_at: :desc)
                                           .first
+    # 今日のサマリー
     @tab = params[:tab] || "today"
 
     if @disease_record.nil?
@@ -87,6 +88,7 @@ class ReportedSymptomsController < ApplicationController
     @reported_symptoms = @disease_record.reported_symptoms
                                         .includes(:symptom_name)
 
+    # 日数カウント（症状の開始日を基準に計算）
     @first_symptom_dates =@reported_symptoms.where.not(symptom_name_id: nil)
                                             .group(:symptom_name_id)
                                             .minimum(:recorded_at)
@@ -104,15 +106,18 @@ class ReportedSymptomsController < ApplicationController
       @day_count =
         (today - @disease_record.start_at.to_date).to_i + 1
 
+      # 今日の症状のみ取得
       @today_symptoms =
         @reported_symptoms.where(recorded_at: today.all_day)
 
+      # 最新体温取得
       @latest_temperature =
         @today_symptoms
           .where.not(body_temperature: nil)
           .order(recorded_at: :desc)
           .first
 
+      # 嘔吐と便の回数カウント
       vomit_id   = SymptomName.find_by(name: "嘔吐")&.id
       diarrhea_id = SymptomName.find_by(name: "便")&.id
 
@@ -136,6 +141,7 @@ class ReportedSymptomsController < ApplicationController
         
     end
 
+    # 全期間サマリー
     if @tab == "all"
       @symptom_slots = {
         headache: "頭痛",
@@ -148,6 +154,7 @@ class ReportedSymptomsController < ApplicationController
         memo: "メモ"
       }
 
+      # カレンダー表示
       this_week_start = Time.zone.today.beginning_of_week(:monday)
       this_week_end   = this_week_start + 6.days
 
@@ -176,7 +183,7 @@ class ReportedSymptomsController < ApplicationController
           }
         end
 
-        
+      # viewでの複雑化防止のためデータ整形（日付ごとの症状有無）
       @matrix = {}
 
       @weeks.values.flatten.each do |date|
@@ -243,6 +250,7 @@ class ReportedSymptomsController < ApplicationController
           .where(recorded_at: @start_date.beginning_of_day..@end_date.end_of_day)
           .group_by { |r| r.recorded_at.to_date }
 
+      # グラフ用データ整形（日付ごとに体温・嘔吐・便を配列に整形）
       @chart_data = {
         labels: @dates.map { |d| d.strftime("%m/%d") },
         temperature: [],

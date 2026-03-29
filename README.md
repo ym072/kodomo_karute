@@ -95,8 +95,8 @@
 - Ruby on Rails 7.2.2.2
 
 ### フロントエンド
-- JavaScript（Importmap）
-- Hotwire（Turbo / Stimulus）：ページ遷移を減らすことで、より手軽な症状記録ができるUIを実現するため。
+- JavaScript（Importmap）：グラフ描画のため。
+- Hotwire（Turbo / Stimulus）：モーダル表示等ページ遷移を減らし操作性を向上させるため。
 
 ### 認証・ユーザー管理
 - Devise：ログイン等の機能を効率的に実装するため。
